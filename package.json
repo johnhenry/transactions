@@ -1,0 +1,19 @@
+{
+  "name": "transactions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:backend": "export $(cat backend/.env); deno run --allow-net --allow-env backend/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnhenry/transactions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnhenry/transactions/issues"
+  },
+  "homepage": "https://github.com/johnhenry/transactions#readme"
+}
