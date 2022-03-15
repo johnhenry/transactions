@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:backend": "export $(cat backend/.env); deno run --allow-env backend/index.ts"
+    "start:backend": "export $(cat backend/.env); deno run --allow-net --allow-env backend/index.ts"
   },
   "repository": {
     "type": "git",
