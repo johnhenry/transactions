@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+button.hide::before {
+  content: "Hide";
+}
+
+.not-showing button.hide::before {
+  content: "Show";
+}
+
+button.bezoslist::before {
+  content: "+";
+}
+
+.bezos button.bezoslist::before {
+  content: "-";
+}
+
+input,
+button {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+tr.not-showing {
+  background-color: grey;
+}
+tr.bezos {
+  background-color: red;
+}
+tr.not-showing.bezos {
+  background-color: darkred;
+}
+
+.solid-select-container .solid-select-list,
+.solid-select-container .solid-select-list * {
+  background-color: white;
+}

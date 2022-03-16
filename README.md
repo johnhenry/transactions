@@ -12,7 +12,7 @@ Take Note of your DATA_API_KEY and your APP_ID.
 
 This backend can be run locally via [Deno](https://deno.land/).
 
-After installing deno create a file called `backend/.env` and add the following lines:
+After installing deno create a file called `.env` and add the following lines:
 
 ```
 APP_ID=<your app id>
@@ -30,7 +30,7 @@ export $(cat .env)
 run the server
 
 ```sh
-run `deno run --allow-net --allow-env backend/index.tsx`
+run `deno run --allow-net --allow-env backend.tsx`
 ```
 
 the server will be accessible at `http://localhost:8000/graphql`
@@ -39,9 +39,9 @@ the server will be accessible at `http://localhost:8000/graphql`
 
 This backend can be run remotely on [Deno.com](https://deno.com/).
 
-Login via github and creae a new app pointing at the raw github file: https://raw.githubusercontent.com/johnhenry/transactions/main/backend/index.ts
+Login via github and creae a new app pointing at the raw github file: https://raw.githubusercontent.com/johnhenry/transactions/main/backend.ts
 
-(Alternatively, you can crate a "playground" and paste the code directly from /backend/index.ts)
+(Alternatively, you can crate a "playground" and paste the code directly from /backend.ts)
 
 Be sure to set your DATA_API_KEY and your APP_ID environment variables appropriately for the project.
 
