@@ -1,41 +1,213 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  --header-height: 64px;
+  --foreground: #333;
+  --midground: #aaa;
+  --background: #fff;
+  --padding: 64px;
+  --padding-minor: 8px;
+  font-size: 1px;
+}
 
-button.hide::before {
+@media (prefers-color-scheme: light) {
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 16rem;
+}
+#root {
+  display: contents;
+}
+/*
+// ////////////////
+application
+// ////////////////
+*/
+
+header {
+  border: 1px solid black;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  background-color: var(--midground);
+  padding: 8px;
+}
+
+.application {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+.application @media (orientation: landscape) {
+  /* .application {
+    display: grid;
+  } */
+}
+
+/*
+// ////////////////
+New Transaction Form
+// ////////////////
+*/
+.new-transaction-form {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: var(--padding);
+}
+.new-transaction-form label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  background-color: var(--midground);
+  padding: 8px;
+  border-radius: 8px;
+  min-height: 64px;
+}
+.new-transaction-form .solid-select-container {
+  width: 50%;
+}
+
+.new-transaction-form .solid-select-container .solid-select-list,
+.new-transaction-form .solid-select-container .solid-select-list * {
+  background-color: white;
+  padding: var(--padding-minor);
+}
+
+.new-transaction-form input:not(.solid-select-input) {
+  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+  border-radius: 8px;
+  padding: var(--padding-minor);
+}
+.new-transaction-form .solid-select-control {
+  background-color: white;
+  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+  border-radius: 8px;
+  padding: var(--padding-minor);
+}
+
+.new-transaction-form button.add-transaction {
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: var(--midground) 0 2px 5px 0;
+  width: 256px;
+  height: 48px;
+}
+/*
+// ////////////////
+Transaction List
+// ////////////////
+*/
+.transaction-list {
+  width: 100%;
+  padding: var(--padding);
+  overflow: scroll;
+}
+.transaction-list table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 32px;
+}
+
+.transaction-list tr {
+  height: 64px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: var(--padding-minor);
+  box-shadow: var(--midground) 0 2px 5px 0;
+}
+
+.not-showing {
+  background-color: grey;
+}
+.bezos-colored {
+  color: red;
+}
+
+.transaction-list tr.bezos {
+  color: red;
+  border-radius: 8px;
+  padding: var(--padding-minor);
+  box-shadow: var(--midground) 0 2px 5px 0;
+}
+.transaction-list tr.not-showing.bezos {
+  color: darkred;
+}
+
+.transaction-list tr td {
+  text-align: center;
+}
+
+.transaction-list button.hide::before {
   content: "Hide";
 }
 
-.not-showing button.hide::before {
+.transaction-list tr.not-showing button.hide::before {
   content: "Show";
 }
 
-button.bezoslist::before {
+.transaction-list button.bezoslist::before {
   content: "+";
 }
 
-.bezos button.bezoslist::before {
+.transaction-list tr.bezos button.bezoslist::before {
   content: "-";
 }
 
-input,
-button {
-  border: 1px solid black;
-  border-radius: 4px;
-  padding: 4px;
+.transaction-list button.hide::before {
+  content: "Hide";
 }
 
-tr.not-showing {
-  background-color: grey;
+.transaction-list tr.not-showing button.hide::before {
+  content: "Show";
 }
-tr.bezos {
+
+.transaction-list button.bezoslist::before {
+  content: "+";
+}
+
+.transaction-list tr.bezos button.bezoslist::before {
+  content: "-";
+}
+
+/*
+// ////////////////
+Totals Counter
+// ////////////////
+*/
+
+.horizontal-bar {
+  width: 80px;
+  height: 16rem;
+  background-color: var(--midground);
+  border: 1px solid var(--midground);
+  display: inline-block;
+}
+.horizontal-bar .bar {
+  display: block;
   background-color: red;
-}
-tr.not-showing.bezos {
-  background-color: darkred;
-}
-
-.solid-select-container .solid-select-list,
-.solid-select-container .solid-select-list * {
-  background-color: white;
 }

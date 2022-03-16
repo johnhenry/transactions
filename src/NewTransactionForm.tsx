@@ -17,6 +17,7 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
 
   return (
     <form class="new-transaction-form">
+      <h2>Add a new transaction</h2>
       <label>
         {" "}
         Merchant Name <input type="text" ref={merchant_name} />
@@ -28,7 +29,8 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
       </label>
       <label>
         {" "}
-        Amount <input type="number" value="0" ref={amount} />
+        Amount ($){" "}
+        <input type="number" min="0.01" value="0.01" step="0.01" ref={amount} />
       </label>
       <label>
         {" "}
@@ -43,6 +45,7 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
       </label>
       <button
         type="button"
+        class="add-transaction"
         onClick={async () => {
           const amount_final = Number(amount.value);
           if (!(amount_final > 0)) {
