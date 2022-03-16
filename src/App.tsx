@@ -101,17 +101,20 @@ const App: Component = () => {
               column
             </p>
             <p>
-              Show Hidden Transactions{" "}
-              <input
-                type="checkbox"
-                onInput={(event) => {
-                  updateShowHidden(event.target.checked);
-                }}
-              />
+              <label>
+                {" "}
+                <input
+                  type="checkbox"
+                  onInput={(event) => {
+                    updateShowHidden(event.target.checked);
+                  }}
+                />{" "}
+                Show Hidden Transactions
+              </label>
             </p>
             <Show when={showHidden()}>
               <p>
-                Hidden transactions Have a{" "}
+                Hidden transactions have a{" "}
                 <span class="not-showing">dark bakckground</span>.
               </p>
             </Show>
