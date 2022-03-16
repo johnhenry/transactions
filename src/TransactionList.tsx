@@ -7,8 +7,7 @@ const TransactionList: Component = (props: {
   transactions: [];
   specials: Set;
   showHidden: boolean;
-  refetchSpecials: Function;
-  refetchTransactions: Function;
+  refetch: Function;
 }) => {
   return (
     <table>
@@ -31,6 +30,7 @@ const TransactionList: Component = (props: {
         >
           {(transaction: any) => {
             const bezos = props.specials.has(transaction.merchant_name);
+            console.log(transaction.category);
             return (
               <tr
                 classList={{
@@ -40,7 +40,7 @@ const TransactionList: Component = (props: {
                 }}
               >
                 <td>{transaction.amount}</td>
-                <td>{transaction.category}</td>
+                <td>{transaction.category.join(",")}</td>
                 <td>{transaction.date}</td>
                 <td>
                   {transaction.merchant_name}{" "}
@@ -57,7 +57,7 @@ const TransactionList: Component = (props: {
                         }
                       }`
                       );
-                      props.refetchSpecials();
+                      props.refetch();
                     }}
                   ></button>
                 </td>
@@ -75,7 +75,7 @@ const TransactionList: Component = (props: {
                         }
                       }`
                       );
-                      props.refetchTransactions();
+                      props.refetch();
                     }}
                   ></button>
                 </td>

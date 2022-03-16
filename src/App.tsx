@@ -4,6 +4,8 @@ import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
 import { createSignal } from "solid-js";
 import TransactionList from "./TransactionList";
+import NewTransactionForm from "./NewTransactionForm";
+
 import { DEFAULT_URI } from "./settings.js";
 
 const App: Component = () => {
@@ -35,9 +37,10 @@ const App: Component = () => {
     undefined,
     { transactions: [] }
   );
-  setInterval(() => {
+  const refetch = async () => {
+    await refetchSpecials();
     refetchTransactions();
-  }, 5000);
+  };
   return (
     <>
       <label>
@@ -49,12 +52,12 @@ const App: Component = () => {
           }}
         />
       </label>
+      <NewTransactionForm refetch={refetch} />
       <TransactionList
         specials={new Set(specials().specials)}
         transactions={transactions().transactions}
         showHidden={showHidden()}
-        refetchSpecials={refetchSpecials}
-        refetchTransactions={refetchTransactions}
+        refetch={refetch}
       />
     </>
   );
