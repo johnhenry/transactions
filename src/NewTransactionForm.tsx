@@ -3,8 +3,6 @@ import { createSignal } from "solid-js";
 import { request } from "@solid-primitives/graphql";
 import { DEFAULT_URI } from "./settings.js";
 import { Select, createOptions } from "@thisbeyond/solid-select";
-
-// Import default styles. (All examples use this via a global import)
 import "@thisbeyond/solid-select/style.css";
 
 const NewTransactionForm: Component = (props: { refetch: Function }) => {

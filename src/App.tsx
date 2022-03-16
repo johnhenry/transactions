@@ -1,5 +1,6 @@
 import type { Component } from "solid-js";
 /* @refresh reload */
+
 import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
 import { createSignal } from "solid-js";
@@ -13,18 +14,10 @@ const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
   const [showHidden, updateShowHidden] = createSignal(false);
   const clientResource = createGraphQLClient(URI());
-  const [specials, { refetch: refetchSpecials }] = clientResource(
+  const [data, { refetch }] = clientResource(
     gql`
       query {
         specials
-      }
-    `,
-    undefined,
-    { specials: [] }
-  );
-  const [transactions, { refetch: refetchTransactions }] = clientResource(
-    gql`
-      query {
         transactions {
           amount
           category
@@ -36,22 +29,15 @@ const App: Component = () => {
       }
     `,
     undefined,
-    { transactions: [] }
+    { specials: [], transactions: [] }
   );
-  const refetch = async () => {
-    await refetchSpecials();
-    refetchTransactions();
-  };
-  // const Ts = showHidden ? transactions().transactions;
   const Ts = () => {
     return showHidden()
-      ? transactions().transactions
-      : transactions().transactions.filter(
-          (transaction: any) => !transaction.hidden
-        );
+      ? data().transactions
+      : data().transactions.filter((transaction: any) => !transaction.hidden);
   };
   const Ss = () => {
-    return new Set(specials().specials);
+    return new Set(data().specials);
   };
   const total = () =>
     Ts().reduce((acc, curr) => {
