@@ -6,7 +6,6 @@ import { DEFAULT_URI } from "./settings.js";
 const TransactionList: Component = (props: {
   transactions: [];
   specials: Set;
-  showHidden: boolean;
   refetch: Function;
 }) => {
   return (
@@ -19,15 +18,7 @@ const TransactionList: Component = (props: {
           <th>Merchant</th>
           <th>Hide</th>
         </tr>
-        <For
-          each={
-            props.showHidden
-              ? props.transactions
-              : props.transactions.filter(
-                  (transaction: any) => !transaction.hidden
-                )
-          }
-        >
+        <For each={props.transactions}>
           {(transaction: any) => {
             const bezos = props.specials.has(transaction.merchant_name);
             return (
