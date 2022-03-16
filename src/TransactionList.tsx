@@ -30,13 +30,12 @@ const TransactionList: Component = (props: {
         >
           {(transaction: any) => {
             const bezos = props.specials.has(transaction.merchant_name);
-            console.log(transaction.category);
             return (
               <tr
                 classList={{
                   transaction: true,
                   bezos,
-                  hidden: transaction.hidden,
+                  "not-showing": transaction.hidden,
                 }}
               >
                 <td>{transaction.amount}</td>

@@ -6,7 +6,7 @@ button.hide::before {
   content: "Hide";
 }
 
-.hidden button.hide::before {
+.not-showing button.hide::before {
   content: "Show";
 }
 
@@ -18,12 +18,24 @@ button.bezoslist::before {
   content: "-";
 }
 
-tr.hidden {
+input,
+button {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+tr.not-showing {
   background-color: grey;
 }
 tr.bezos {
   background-color: red;
 }
-tr.hidden.bezos {
+tr.not-showing.bezos {
   background-color: darkred;
+}
+
+.solid-select-container .solid-select-list,
+.solid-select-container .solid-select-list * {
+  background-color: white;
 }

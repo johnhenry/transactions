@@ -1,12 +1,21 @@
 import type { Component } from "solid-js";
+import { createSignal } from "solid-js";
 import { request } from "@solid-primitives/graphql";
 import { DEFAULT_URI } from "./settings.js";
+import { Select, createOptions } from "@thisbeyond/solid-select";
+
+// Import default styles. (All examples use this via a global import)
+import "@thisbeyond/solid-select/style.css";
 
 const NewTransactionForm: Component = (props: { refetch: Function }) => {
   let merchant_name: HTMLInputElement,
-    categories: HTMLInputElement,
     date: HTMLInputElement,
     amount: HTMLInputElement;
+  let categoriesElement;
+  const [categories, setCategories] = createSignal([]);
+  const changeCategories = (selected) => {
+    setCategories(selected);
+  };
 
   return (
     <form>
@@ -14,10 +23,7 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
         {" "}
         Merchant Name <input type="text" ref={merchant_name} />
       </label>
-      <label>
-        {" "}
-        Categories <input type="text" ref={categories} />
-      </label>
+
       <label>
         {" "}
         Date <input type="date" ref={date} />
@@ -25,6 +31,17 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
       <label>
         {" "}
         Amount <input type="number" value="0" ref={amount} />
+      </label>
+      <label>
+        {" "}
+        Categories
+        <Select
+          multiple
+          onChange={changeCategories}
+          {...createOptions([], {
+            createable: true,
+          })}
+        />
       </label>
       <button
         type="button"
@@ -40,8 +57,7 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
           const date_final = `"${date_.getFullYear()}-${
             date_.getMonth() + 1
           }-${date_.getDate()}"`;
-          const categories_final = (categories.value || "")
-            .split(",")
+          const categories_final = categories()
             .map((x) => `"${x}"`)
             .join(",");
           const merchant_name_intermediate = merchant_name.value;
@@ -49,16 +65,15 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
             return alert("merchant name must be provided");
           }
           const merchant_name_final = `"${merchant_name_intermediate}"`;
-          const q = `mutation {
+          const query = `mutation {
   addTransaction(amount: ${amount_final}, category: [${categories_final}], date: ${date_final}, merchant_name: ${merchant_name_final}) {
     _id
   }
 }`;
-          console.log(q);
-          await request(DEFAULT_URI, q);
+          await request(DEFAULT_URI, query);
           props.refetch();
           merchant_name.value = "";
-          categories.value = "";
+          categoriesElement.value = "";
           date.value = "";
           amount.value = "0";
         }}
