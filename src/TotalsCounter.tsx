@@ -5,10 +5,10 @@ import { DEFAULT_URI } from "./settings.js";
 
 const TotalsCounter: Component = (props: { total: Number; bTotal: Number }) => {
   return (
-    <>
+    <div class="totals-counter">
       <div>Total {props.total}</div>
       <div>BTotal {props.bTotal}</div>
-    </>
+    </div>
   );
 };
 export default TotalsCounter;

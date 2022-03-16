@@ -18,7 +18,7 @@ const NewTransactionForm: Component = (props: { refetch: Function }) => {
   };
 
   return (
-    <form>
+    <form class="new-transaction-form">
       <label>
         {" "}
         Merchant Name <input type="text" ref={merchant_name} />

@@ -70,7 +70,7 @@ const App: Component = () => {
   };
 
   return (
-    <>
+    <div class="application">
       <label>
         ShowHidden
         <input
@@ -83,7 +83,7 @@ const App: Component = () => {
       <NewTransactionForm refetch={refetch} />
       <TotalsCounter total={total} bTotal={bTotal} />
       <TransactionList specials={Ss()} transactions={Ts()} refetch={refetch} />
-    </>
+    </div>
   );
 };
 

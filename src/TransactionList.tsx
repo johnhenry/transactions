@@ -9,7 +9,7 @@ const TransactionList: Component = (props: {
   refetch: Function;
 }) => {
   return (
-    <table>
+    <table class="transaction-list">
       <Show when={props.transactions.length}>
         <tr>
           <th>Amount</th>
