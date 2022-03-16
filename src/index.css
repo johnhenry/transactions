@@ -1,3 +1,19 @@
 * {
   box-sizing: border-box;
 }
+
+button.hide::before {
+  content: "Hide";
+}
+
+.hidden button.hide::before {
+  content: "Show";
+}
+
+button.bezoslist::before {
+  content: "+";
+}
+
+.bezos button.bezoslist::before {
+  content: "-";
+}
