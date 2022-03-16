@@ -1,30 +1,31 @@
 import type { Component } from "solid-js";
 /* @refresh reload */
+
 import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
-import { createSignal } from "solid-js";
+import { createSignal, Show, createEffect } from "solid-js";
 import TransactionList from "./TransactionList";
 import NewTransactionForm from "./NewTransactionForm";
-import TotalsCounter from "./TotalsCounter";
+import HorizontalBar from "./HorizontalBar";
+import AppHeader from "./AppHeader";
 
 import { DEFAULT_URI } from "./settings.js";
 
 const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
+  const [colorSchemePreference, updateColorSchemePreference] = createSignal(
+    localStorage.getItem("color-scheme-preference") || ""
+  );
+  const [total, updateTotal] = createSignal(0);
+  const [bTotal, updateBTotal] = createSignal(0);
+  const [percentage, setPercentage] = createSignal(`NaN%`);
+
   const [showHidden, updateShowHidden] = createSignal(false);
   const clientResource = createGraphQLClient(URI());
-  const [specials, { refetch: refetchSpecials }] = clientResource(
+  const [data, { refetch }] = clientResource(
     gql`
       query {
         specials
-      }
-    `,
-    undefined,
-    { specials: [] }
-  );
-  const [transactions, { refetch: refetchTransactions }] = clientResource(
-    gql`
-      query {
         transactions {
           amount
           category
@@ -36,53 +37,92 @@ const App: Component = () => {
       }
     `,
     undefined,
-    { transactions: [] }
+    { specials: [], transactions: [] }
   );
-  const refetch = async () => {
-    await refetchSpecials();
-    refetchTransactions();
-  };
-  // const Ts = showHidden ? transactions().transactions;
   const Ts = () => {
     return showHidden()
-      ? transactions().transactions
-      : transactions().transactions.filter(
-          (transaction: any) => !transaction.hidden
-        );
+      ? data().transactions
+      : data().transactions.filter((transaction: any) => !transaction.hidden);
   };
   const Ss = () => {
-    return new Set(specials().specials);
+    return new Set(data().specials);
   };
-  const total = () =>
-    Ts().reduce((acc, curr) => {
-      return acc + curr.amount;
-    }, 0);
 
-  const bTotal = () => {
-    const transactions = Ts();
-    return transactions
-      .filter((transaction) => {
-        return Ss().has(transaction.merchant_name);
-      })
-      .reduce((acc, curr) => {
+  createEffect(() => {
+    updateTotal(
+      Ts().reduce((acc, curr) => {
         return acc + curr.amount;
-      }, 0);
-  };
+      }, 0)
+    );
+    updateBTotal(
+      Ts()
+        .filter((transaction) => {
+          return Ss().has(transaction.merchant_name);
+        })
+        .reduce((acc, curr) => {
+          return acc + curr.amount;
+        }, 0)
+    );
+    setPercentage(`${((bTotal() / total()) * 100).toFixed(2)}%`);
+  });
 
   return (
     <>
-      <label>
-        ShowHidden
-        <input
-          type="checkbox"
-          onInput={(event) => {
-            updateShowHidden(event.target.checked);
-          }}
-        />
-      </label>
-      <NewTransactionForm refetch={refetch} />
-      <TotalsCounter total={total} bTotal={bTotal} />
-      <TransactionList specials={Ss()} transactions={Ts()} refetch={refetch} />
+      <div class={`application ${colorSchemePreference()}`}>
+        <AppHeader
+          updateColorSchemePreference={updateColorSchemePreference}
+          colorSchemePreference={colorSchemePreference}
+        ></AppHeader>
+        <main>
+          <NewTransactionForm refetch={refetch} />
+          <div class="info">
+            <p>
+              Bezos related transactions are{" "}
+              <span class="bezos-colored">colored red</span> and account for{" "}
+              <span class="bezos-colored">${bTotal().toFixed(2)}</span> of the
+              total <span>${total().toFixed(2)}</span> spent.
+            </p>
+            <p>
+              This accounts for{" "}
+              <span class="bezos-colored">
+                <HorizontalBar percentage={percentage()} />{" "}
+              </span>
+              of all transactions
+            </p>
+            <p>
+              Add or remove a company from the list of Jeff Bezos related
+              companies using <span style="font-weight:bold">+</span> or{" "}
+              <span style="font-weight:bold">-</span> next to the Merchant's
+              name.
+            </p>
+            <p>Hidden transactions are only included in totals when shown.</p>
+            <p>
+              Hide and show using the <span style="font-weight:bold">Hide</span>{" "}
+              column
+            </p>
+            <p>
+              Show Hidden Transactions{" "}
+              <input
+                type="checkbox"
+                onInput={(event) => {
+                  updateShowHidden(event.target.checked);
+                }}
+              />
+            </p>
+            <Show when={showHidden()}>
+              <p>
+                Hidden transactions Have a{" "}
+                <span class="not-showing">dark bakckground</span>.
+              </p>
+            </Show>
+          </div>
+          <TransactionList
+            specials={Ss()}
+            transactions={Ts()}
+            refetch={refetch}
+          />
+        </main>
+      </div>
     </>
   );
 };

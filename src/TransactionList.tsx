@@ -9,72 +9,74 @@ const TransactionList: Component = (props: {
   refetch: Function;
 }) => {
   return (
-    <table>
-      <Show when={props.transactions.length}>
-        <tr>
-          <th>Amount</th>
-          <th>Category</th>
-          <th>Date</th>
-          <th>Merchant</th>
-          <th>Hide</th>
-        </tr>
-        <For each={props.transactions}>
-          {(transaction: any) => {
-            const bezos = props.specials.has(transaction.merchant_name);
-            return (
-              <tr
-                classList={{
-                  transaction: true,
-                  bezos,
-                  "not-showing": transaction.hidden,
-                }}
-              >
-                <td>{transaction.amount}</td>
-                <td>{transaction.category.join(",")}</td>
-                <td>{transaction.date}</td>
-                <td>
-                  {transaction.merchant_name}{" "}
-                  <button
-                    classList={{ bezoslist: true }}
-                    onClick={async () => {
-                      await request(
-                        DEFAULT_URI,
-                        `mutation {
+    <div class="transaction-list">
+      <table>
+        <Show when={props.transactions.length}>
+          <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Merchant</th>
+            <th>Hide</th>
+          </tr>
+          <For each={props.transactions}>
+            {(transaction: any) => {
+              const bezos = props.specials.has(transaction.merchant_name);
+              return (
+                <tr
+                  classList={{
+                    transaction: true,
+                    "bezos-colored": bezos,
+                    "not-showing": transaction.hidden,
+                  }}
+                >
+                  <td>${transaction.amount}</td>
+                  <td>{transaction.category.join(",")}</td>
+                  <td>{transaction.date}</td>
+                  <td>
+                    {transaction.merchant_name}{" "}
+                    <button
+                      classList={{ bezoslist: true }}
+                      onClick={async () => {
+                        await request(
+                          DEFAULT_URI,
+                          `mutation {
                         ${bezos ? "remove" : "add"}Special(special: "${
-                          transaction.merchant_name
-                        }") {
+                            transaction.merchant_name
+                          }") {
                           success
                         }
                       }`
-                      );
-                      props.refetch();
-                    }}
-                  ></button>
-                </td>
-                <td>
-                  <button
-                    classList={{ hide: true }}
-                    onClick={async () => {
-                      await request(
-                        DEFAULT_URI,
-                        `mutation {
+                        );
+                        props.refetch();
+                      }}
+                    ></button>
+                  </td>
+                  <td>
+                    <button
+                      classList={{ hide: true }}
+                      onClick={async () => {
+                        await request(
+                          DEFAULT_URI,
+                          `mutation {
                         ${
                           transaction.hidden ? "show" : "hide"
                         }Transaction(_id: "${transaction._id}") {
                           success
                         }
                       }`
-                      );
-                      props.refetch();
-                    }}
-                  ></button>
-                </td>
-              </tr>
-            );
-          }}
-        </For>
-      </Show>
-    </table>
+                        );
+                        props.refetch();
+                      }}
+                    ></button>
+                  </td>
+                </tr>
+              );
+            }}
+          </For>
+        </Show>
+      </table>
+    </div>
   );
 };
 export default TransactionList;
