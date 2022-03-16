@@ -19,7 +19,7 @@ const TransactionList: Component = (props: {
             <th>Merchant</th>
             <th>Hide</th>
           </tr>
-          <For each={props.transactions}>
+          <For each={props.transactions.reverse()}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
               return (
