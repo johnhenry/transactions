@@ -152,18 +152,23 @@ New Transaction Form
 .new-transaction-form .solid-select-container .solid-select-list * {
   background-color: white;
   padding: var(--padding-minor);
+    color: #333;
+
 }
 
 .new-transaction-form input:not(.solid-select-input) {
   box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
   border-radius: 8px;
   padding: var(--padding-minor);
+  color: #333;
 }
 .new-transaction-form .solid-select-control {
   background-color: white;
   box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
   border-radius: 8px;
   padding: var(--padding-minor);
+  color: #333;
+
 }
 
 .new-transaction-form button.add-transaction {
@@ -180,9 +185,15 @@ Transaction List
 // ////////////////
 */
 .transaction-list {
+  grid-area: list;
   width: 100%;
   padding: var(--padding);
   overflow: scroll;
+}
+@media (orientation:landscape) {
+  .transaction-list {
+      height: 100%;
+  }
 }
 .transaction-list table {
   width: 100%;
@@ -192,7 +203,6 @@ Transaction List
 }
 
 .transaction-list tr {
-  grid-area: list;
   height: 64px;
   border: 1px solid var(--foreground);
   border-radius: 8px;

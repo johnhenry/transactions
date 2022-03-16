@@ -112,7 +112,7 @@ const App: Component = () => {
             <Show when={showHidden()}>
               <p>
                 Hidden transactions Have a{" "}
-                <span class="not-showing">grey bakckground</span>.
+                <span class="not-showing">dark bakckground</span>.
               </p>
             </Show>
           </div>
