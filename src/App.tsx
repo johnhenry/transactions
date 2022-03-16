@@ -12,6 +12,9 @@ import { DEFAULT_URI } from "./settings.js";
 
 const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
+  const [colorSchemePreference, updateColorSchemePreference] = createSignal(
+    localStorage.getItem("color-scheme-preference") || ""
+  );
   const [total, updateTotal] = createSignal(0);
   const [bTotal, updateBTotal] = createSignal(0);
   const [percentage, setPercentage] = createSignal(`NaN%`);
@@ -64,29 +67,57 @@ const App: Component = () => {
 
   return (
     <>
-      <div class="application">
+      <div class={`application ${colorSchemePreference()}`}>
         <header>
           <div class="logo"> Faris's Transactions</div>
-          <div style={{ "margin-left": "auto" }}></div>
+          <div style={{ "margin-left": "auto" }}>
+            <button
+              class="color-scheme-button"
+              onClick={() => {
+                switch (colorSchemePreference()) {
+                  case "dark":
+                    updateColorSchemePreference("light");
+                    break;
+                  case "light":
+                    updateColorSchemePreference("");
+                    break;
+                  default:
+                    updateColorSchemePreference("dark");
+                    break;
+                }
+                localStorage.setItem(
+                  "color-scheme-preference",
+                  colorSchemePreference()
+                );
+              }}
+            ></button>
+          </div>
         </header>
         <NewTransactionForm refetch={refetch} />
         <div>
           <p>
-            Bezos related transactions are colored{" "}
-            <span class="bezos-colored">red</span> and account for{" "}
+            Bezos related transactions are{" "}
+            <span class="bezos-colored">colored red</span> and account for{" "}
             <span class="bezos-colored">${bTotal().toFixed(2)}</span> of the
             total <span>${total().toFixed(2)}</span> spent.
           </p>
           <p>
-            This accounts for <HorizontalBar percentage={percentage()} /> of all
-            transactions
+            This accounts for{" "}
+            <span class="bezos-colored">
+              <HorizontalBar percentage={percentage()} />{" "}
+            </span>
+            of all transactions
           </p>
           <p>
             Add or remove a company from the list of Jeff Bezos related
-            companies using <span style="fontweight:bold">+</span> or{" "}
-            <span style="fontweight:bold">-</span> next to the Merchant's name.
+            companies using <span style="font-weight:bold">+</span> or{" "}
+            <span style="font-weight:bold">-</span> next to the Merchant's name.
           </p>
           <p>Hidden transactions are only included in totals when shown.</p>
+          <p>
+            Hide and show using the <span style="font-weight:bold">Hide</span>{" "}
+            column
+          </p>
           <p>
             Show Hidden Transactions{" "}
             <input
