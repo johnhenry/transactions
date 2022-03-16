@@ -17,3 +17,13 @@ button.bezoslist::before {
 .bezos button.bezoslist::before {
   content: "-";
 }
+
+tr.hidden {
+  background-color: grey;
+}
+tr.bezos {
+  background-color: red;
+}
+tr.hidden.bezos {
+  background-color: darkred;
+}

@@ -4,8 +4,8 @@ import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
 import { createSignal } from "solid-js";
 import TransactionList from "./TransactionList";
-// const DEFAULT_URI = "https://low-hawk-86.deno.dev/graphql";
-const DEFAULT_URI = "http://localhost:8080/graphql";
+import { DEFAULT_URI } from "./settings.js";
+
 const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
   const [showHidden, updateShowHidden] = createSignal(false);
@@ -35,6 +35,9 @@ const App: Component = () => {
     undefined,
     { transactions: [] }
   );
+  setInterval(() => {
+    refetchTransactions();
+  }, 5000);
   return (
     <>
       <label>
@@ -50,6 +53,8 @@ const App: Component = () => {
         specials={new Set(specials().specials)}
         transactions={transactions().transactions}
         showHidden={showHidden()}
+        refetchSpecials={refetchSpecials}
+        refetchTransactions={refetchTransactions}
       />
     </>
   );

@@ -1,9 +1,14 @@
 import type { Component } from "solid-js";
-import { Show, For } from "solid-js";
+import { createSignal, Show, For } from "solid-js";
+import { gql, request } from "@solid-primitives/graphql";
+import { DEFAULT_URI } from "./settings.js";
+
 const TransactionList: Component = (props: {
   transactions: [];
   specials: Set;
   showHidden: boolean;
+  refetchSpecials: Function;
+  refetchTransactions: Function;
 }) => {
   return (
     <table>
@@ -24,26 +29,59 @@ const TransactionList: Component = (props: {
                 )
           }
         >
-          {(transaction: any) => (
-            <tr
-              classList={{
-                transaction: true,
-                bezos: props.specials.has(transaction.merchant_name),
-                hidden: transaction.hidden,
-              }}
-            >
-              <td>{transaction.amount}</td>
-              <td>{transaction.category}</td>
-              <td>{transaction.date}</td>
-              <td>
-                {transaction.merchant_name}{" "}
-                <button classList={{ bezoslist: true }}></button>
-              </td>
-              <td>
-                <button classList={{ hide: true }}></button>
-              </td>
-            </tr>
-          )}
+          {(transaction: any) => {
+            const bezos = props.specials.has(transaction.merchant_name);
+            return (
+              <tr
+                classList={{
+                  transaction: true,
+                  bezos,
+                  hidden: transaction.hidden,
+                }}
+              >
+                <td>{transaction.amount}</td>
+                <td>{transaction.category}</td>
+                <td>{transaction.date}</td>
+                <td>
+                  {transaction.merchant_name}{" "}
+                  <button
+                    classList={{ bezoslist: true }}
+                    onClick={async () => {
+                      await request(
+                        DEFAULT_URI,
+                        `mutation {
+                        ${bezos ? "remove" : "add"}Special(special: "${
+                          transaction.merchant_name
+                        }") {
+                          success
+                        }
+                      }`
+                      );
+                      props.refetchSpecials();
+                    }}
+                  ></button>
+                </td>
+                <td>
+                  <button
+                    classList={{ hide: true }}
+                    onClick={async () => {
+                      await request(
+                        DEFAULT_URI,
+                        `mutation {
+                        ${
+                          transaction.hidden ? "show" : "hide"
+                        }Transaction(_id: "${transaction._id}") {
+                          success
+                        }
+                      }`
+                      );
+                      props.refetchTransactions();
+                    }}
+                  ></button>
+                </td>
+              </tr>
+            );
+          }}
         </For>
       </Show>
     </table>
