@@ -7,6 +7,7 @@ import { createSignal, Show, createEffect } from "solid-js";
 import TransactionList from "./TransactionList";
 import NewTransactionForm from "./NewTransactionForm";
 import HorizontalBar from "./HorizontalBar";
+import AppHeader from "./AppHeader";
 
 import { DEFAULT_URI } from "./settings.js";
 
@@ -68,77 +69,59 @@ const App: Component = () => {
   return (
     <>
       <div class={`application ${colorSchemePreference()}`}>
-        <header>
-          <div class="logo"> Faris's Transactions</div>
-          <div style={{ "margin-left": "auto" }}>
-            <button
-              class="color-scheme-button"
-              onClick={() => {
-                switch (colorSchemePreference()) {
-                  case "dark":
-                    updateColorSchemePreference("light");
-                    break;
-                  case "light":
-                    updateColorSchemePreference("");
-                    break;
-                  default:
-                    updateColorSchemePreference("dark");
-                    break;
-                }
-                localStorage.setItem(
-                  "color-scheme-preference",
-                  colorSchemePreference()
-                );
-              }}
-            ></button>
-          </div>
-        </header>
-        <NewTransactionForm refetch={refetch} />
-        <div>
-          <p>
-            Bezos related transactions are{" "}
-            <span class="bezos-colored">colored red</span> and account for{" "}
-            <span class="bezos-colored">${bTotal().toFixed(2)}</span> of the
-            total <span>${total().toFixed(2)}</span> spent.
-          </p>
-          <p>
-            This accounts for{" "}
-            <span class="bezos-colored">
-              <HorizontalBar percentage={percentage()} />{" "}
-            </span>
-            of all transactions
-          </p>
-          <p>
-            Add or remove a company from the list of Jeff Bezos related
-            companies using <span style="font-weight:bold">+</span> or{" "}
-            <span style="font-weight:bold">-</span> next to the Merchant's name.
-          </p>
-          <p>Hidden transactions are only included in totals when shown.</p>
-          <p>
-            Hide and show using the <span style="font-weight:bold">Hide</span>{" "}
-            column
-          </p>
-          <p>
-            Show Hidden Transactions{" "}
-            <input
-              type="checkbox"
-              onInput={(event) => {
-                updateShowHidden(event.target.checked);
-              }}
-            />
-          </p>
-          <Show when={showHidden()}>
+        <AppHeader
+          updateColorSchemePreference={updateColorSchemePreference}
+          colorSchemePreference={colorSchemePreference}
+        ></AppHeader>
+        <main>
+          <NewTransactionForm refetch={refetch} />
+          <div class="info">
             <p>
-              Hidden transactions Have a{" "}
-              <span class="not-showing">grey bakckground</span>.
+              Bezos related transactions are{" "}
+              <span class="bezos-colored">colored red</span> and account for{" "}
+              <span class="bezos-colored">${bTotal().toFixed(2)}</span> of the
+              total <span>${total().toFixed(2)}</span> spent.
             </p>
-          </Show>
-        </div>
-        <TransactionList
-          specials={Ss()}
-          transactions={Ts()}
-          refetch={refetch}
-        />
+            <p>
+              This accounts for{" "}
+              <span class="bezos-colored">
+                <HorizontalBar percentage={percentage()} />{" "}
+              </span>
+              of all transactions
+            </p>
+            <p>
+              Add or remove a company from the list of Jeff Bezos related
+              companies using <span style="font-weight:bold">+</span> or{" "}
+              <span style="font-weight:bold">-</span> next to the Merchant's
+              name.
+            </p>
+            <p>Hidden transactions are only included in totals when shown.</p>
+            <p>
+              Hide and show using the <span style="font-weight:bold">Hide</span>{" "}
+              column
+            </p>
+            <p>
+              Show Hidden Transactions{" "}
+              <input
+                type="checkbox"
+                onInput={(event) => {
+                  updateShowHidden(event.target.checked);
+                }}
+              />
+            </p>
+            <Show when={showHidden()}>
+              <p>
+                Hidden transactions Have a{" "}
+                <span class="not-showing">grey bakckground</span>.
+              </p>
+            </Show>
+          </div>
+          <TransactionList
+            specials={Ss()}
+            transactions={Ts()}
+            refetch={refetch}
+          />
+        </main>
       </div>
     </>
   );

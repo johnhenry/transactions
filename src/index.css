@@ -67,18 +67,27 @@ header {
 }
 
 .application {
+  background-color: var(--background);
+  color: var(--foreground);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.application > main {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
   overflow: hidden;
-  background-color: var(--background);
-  color: var(--foreground);
 }
-.application @media (orientation: landscape) {
-  /* .application {
+@media (orientation: landscape) {
+  .application > main {
     display: grid;
-  } */
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "form info"
+      "form list";
+  }
 }
 
 /*
@@ -94,6 +103,19 @@ New Transaction Form
   width: 100%;
   padding: var(--padding);
 }
+
+@media screen and (orientation: landscape) {
+  .new-transaction-form {
+    grid-area: form;
+    height: 100%;
+  }
+}
+
+.info {
+  grid-area: info;
+  padding: var(--padding);
+}
+
 .new-transaction-form label {
   display: flex;
   flex-direction: row;
@@ -154,6 +176,7 @@ Transaction List
 }
 
 .transaction-list tr {
+  grid-area: list;
   height: 64px;
   border: 1px solid var(--foreground);
   border-radius: 8px;
