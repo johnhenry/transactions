@@ -3,7 +3,7 @@ import type { Component } from "solid-js";
 
 import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
-import { createSignal, Show, createEffect } from "solid-js";
+import { createSignal, Show, createEffect, ResourceReturn } from "solid-js";
 import TransactionList from "./TransactionList";
 import NewTransactionForm from "./NewTransactionForm";
 import HorizontalBar from "./HorizontalBar";
@@ -22,7 +22,10 @@ const App: Component = () => {
 
   const [showHidden, updateShowHidden] = createSignal(false);
   const clientResource = createGraphQLClient(URI());
-  const [data, { refetch }] = clientResource(
+  const [data, { refetch }]: ResourceReturn<{
+    specials: any[];
+    transactions: any[];
+  }> = clientResource(
     gql`
       query {
         specials
@@ -112,7 +115,7 @@ const App: Component = () => {
                 Show Hidden Transactions
               </label>
             </p>
-            <Show when={showHidden()}>
+            <Show when={showHidden()} children={null}>
               <p>
                 Hidden transactions have a{" "}
                 <span class="not-showing">dark bakckground</span>.

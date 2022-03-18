@@ -1,4 +1,9 @@
-const AppHeader = (props: any) => (
+import type { Component } from "solid-js";
+
+const AppHeader: Component<{
+  colorSchemePreference: Function;
+  updateColorSchemePreference: Function;
+}> = (props: any) => (
   <header>
     <div class="logo"> Faris's Transactions</div>
     <div style={{ "margin-left": "auto" }}>

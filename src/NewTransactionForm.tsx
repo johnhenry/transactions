@@ -5,7 +5,9 @@ import { DEFAULT_URI } from "./settings.js";
 import { Select, createOptions } from "@thisbeyond/solid-select";
 import "@thisbeyond/solid-select/style.css";
 
-const NewTransactionForm: Component = (props: { refetch: Function }) => {
+const NewTransactionForm: Component<{ refetch: Function }> = (props: {
+  refetch: Function;
+}) => {
   let merchant_name: HTMLInputElement,
     date: HTMLInputElement,
     amount: HTMLInputElement;

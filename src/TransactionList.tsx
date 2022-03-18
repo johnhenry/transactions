@@ -1,17 +1,21 @@
 import type { Component } from "solid-js";
-import { createSignal, Show, For } from "solid-js";
-import { gql, request } from "@solid-primitives/graphql";
+import { Show, For } from "solid-js";
+import { request } from "@solid-primitives/graphql";
 import { DEFAULT_URI } from "./settings.js";
 
-const TransactionList: Component = (props: {
-  transactions: [];
-  specials: Set;
+const TransactionList: Component<{
+  transactions: any[];
+  specials: Set<string>;
+  refetch: Function;
+}> = (props: {
+  transactions: any[];
+  specials: Set<string>;
   refetch: Function;
 }) => {
   return (
     <div class="transaction-list">
       <table>
-        <Show when={props.transactions.length}>
+        <Show when={props.transactions.length} children={null}>
           <tr>
             <th>Amount</th>
             <th>Category</th>
@@ -19,7 +23,7 @@ const TransactionList: Component = (props: {
             <th>Merchant</th>
             <th>Hide</th>
           </tr>
-          <For each={props.transactions.reverse()}>
+          <For each={props.transactions.reverse()} children={null}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
               return (
@@ -50,7 +54,9 @@ const TransactionList: Component = (props: {
                         );
                         props.refetch();
                       }}
-                    ></button>
+                    >
+                      {" "}
+                    </button>
                   </td>
                   <td>
                     <button
@@ -68,7 +74,9 @@ const TransactionList: Component = (props: {
                         );
                         props.refetch();
                       }}
-                    ></button>
+                    >
+                      {" "}
+                    </button>
                   </td>
                 </tr>
               );
