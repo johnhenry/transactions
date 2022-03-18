@@ -84,14 +84,14 @@ export $(cat .env)
 Run the server with.
 
 ```sh
-run `deno run --allow-net --allow-env backend.tsx`
+run `deno run --allow-net --allow-env backend/index.tsx`
 ```
 
 the server will be accessible at `http://localhost:8080/graphql`
 
 ### Remote Backend (Option 2)
 
-This backend can be run remotely on [Deno.com](https://deno.com/). Simply create a project point it to the `backend.ts` file on github. Alternatively, you can create a "playground" and paste the code directly from this file.
+This backend can be run remotely on [Deno.com](https://deno.com/). Simply create a project point it to the `backend/index.ts` file on github. Alternatively, you can run `deno bundle backend/index.ts` and paste the resulting text directly into a "playground".
 
 Be sure to set your **DATA_API_KEY** and your **APP_ID** environment variables appropriately for the project.
 

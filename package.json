@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:backend": "export $(cat .env); deno run --allow-net --allow-env backend.ts",
+    "start:backend": "export $(cat .env); deno run --allow-net --allow-env backend/index.ts",
     "start:frontend": "vite",
     "start": "npm run start:backend && npm run start:frontend",
     "dev": "vite",
