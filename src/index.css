@@ -3,20 +3,18 @@
 }
 :root {
   --header-height: 64px;
-    --padding: 32px;
+  --padding: 32px;
   --padding-minor: 8px;
 
   font-size: 1px;
 }
-@media (orientation:landscape) {
+@media (orientation: landscape) {
   :root {
     --padding: 64px;
     --padding-minor: 8px;
   }
 }
 
-  
-}
 :root {
   --header-height: 64px;
   --padding: 64px;
@@ -152,8 +150,7 @@ New Transaction Form
 .new-transaction-form .solid-select-container .solid-select-list * {
   background-color: white;
   padding: var(--padding-minor);
-    color: #333;
-
+  color: #333;
 }
 
 .new-transaction-form input:not(.solid-select-input) {
@@ -168,7 +165,6 @@ New Transaction Form
   border-radius: 8px;
   padding: var(--padding-minor);
   color: #333;
-
 }
 
 .new-transaction-form button.add-transaction {
@@ -190,9 +186,9 @@ Transaction List
   padding: var(--padding);
   overflow: scroll;
 }
-@media (orientation:landscape) {
+@media (orientation: landscape) {
   .transaction-list {
-      height: 100%;
+    height: 100%;
   }
 }
 .transaction-list table {
