@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { For, createSignal, Suspense } from "solid-js";
 import { request } from "@solid-primitives/graphql";
-import { DEFAULT_URI } from "./settings.js";
+import { DEFAULT_URI } from "./settings";
 
 const sortStrings = (a: string, b: string) => {
   return a < b ? -1 : a > b ? 1 : 0;
@@ -69,9 +69,8 @@ const TransactionList: Component<{
               <td colspan="100%">Loading Transactions...</td>
             </tr>
           }
-          children={null}
         >
-          {/* <Show when={orderedTransactions().length} children={null}> */}
+          {/* <Show when={orderedTransactions().length} > */}
           <tr
             classList={{
               ascending: orderAscending(),
@@ -125,7 +124,7 @@ const TransactionList: Component<{
             </th>
           </tr>
 
-          <For each={orderedTransactions()} children={null}>
+          <For each={orderedTransactions()}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
               return (

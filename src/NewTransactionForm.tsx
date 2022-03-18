@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createSignal, Show } from "solid-js";
 import { request } from "@solid-primitives/graphql";
-import { DEFAULT_URI } from "./settings.js";
+import { DEFAULT_URI } from "./settings";
 import { Select, createOptions } from "@thisbeyond/solid-select";
 import "@thisbeyond/solid-select/style.css";
 const CreateNewTransactionQuery = ({
@@ -9,6 +9,11 @@ const CreateNewTransactionQuery = ({
   categories,
   date,
   merchant_name,
+}: {
+  amount: number;
+  categories: string[];
+  date: string;
+  merchant_name: string;
 }) => {
   const query = `mutation {
   addTransaction(amount: ${amount}, category: [${categories}], date: ${date}, merchant_name: ${merchant_name}) {
@@ -32,7 +37,6 @@ const NewTransactionForm: Component<{ refetch: Function }> = (props: {
       <Show
         when={!loading()}
         fallback={<label>Adding New Transaction...</label>}
-        children={null}
       >
         <h2>Add a new transaction</h2>
         <label>

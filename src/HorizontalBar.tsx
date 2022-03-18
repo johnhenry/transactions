@@ -6,11 +6,7 @@ const HorizontalBar: Component<{ percentage: string }> = (props: {
 }) => {
   // const percentage = (props.value / props.max) * 100;
   return (
-    <Show
-      when={props.percentage !== "NaN%"}
-      fallback={"(calculating...)"}
-      children={null}
-    >
+    <Show when={props.percentage !== "NaN%"} fallback={"(calculating...)"}>
       {props.percentage}{" "}
       <span class="horizontal-bar">
         <span class="bar" style={`height:100%;width:${props.percentage};%`} />

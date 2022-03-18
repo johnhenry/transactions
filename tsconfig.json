@@ -13,5 +13,5 @@
     "isolatedModules": true,
     "lib": ["es5", "dom", "es2015"]
   },
-  "files": ["backend/index.ts"]
+  "files": ["backend/index.ts", "src/index.tsx"]
 }

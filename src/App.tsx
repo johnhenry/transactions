@@ -9,7 +9,9 @@ import NewTransactionForm from "./NewTransactionForm";
 import HorizontalBar from "./HorizontalBar";
 import AppHeader from "./AppHeader";
 
-import { DEFAULT_URI } from "./settings.js";
+import { DEFAULT_URI } from "./settings";
+
+import { Transaction } from "../backend/resolvers/types";
 
 const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
@@ -23,8 +25,8 @@ const App: Component = () => {
   const [showHidden, updateShowHidden] = createSignal(false);
   const clientResource = createGraphQLClient(URI());
   const [data, { refetch }]: ResourceReturn<{
-    specials: any[];
-    transactions: any[];
+    specials: (never | string)[];
+    transactions: (never | Transaction)[];
   }> = clientResource(
     gql`
       query {
@@ -115,7 +117,7 @@ const App: Component = () => {
                 Show Hidden Transactions
               </label>
             </p>
-            <Show when={showHidden()} children={null}>
+            <Show when={showHidden()}>
               <p>
                 Hidden transactions have a{" "}
                 <span class="not-showing">dark bakckground</span>.
