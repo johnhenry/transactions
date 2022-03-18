@@ -1,13 +1,30 @@
+//@ts-ignore
 import { Router, Application } from "https://deno.land/x/oak/mod.ts";
+// @ts-ignore
+import { applyGraphQL, gql } from "https://deno.land/x/oak_graphql/mod.ts";
+
+declare const Deno: {
+  env: { get: Function };
+};
 const APP_ID = Deno.env.get("APP_ID");
 const DATA_API_KEY = Deno.env.get("DATA_API_KEY");
 const DATA_SOURCE = "Cluster0";
 const DATABASE = "transaction_db";
-
 const PORT = 8080;
-
 const CreateMongoDBQuery =
-  ({ APP_ID, DATA_API_KEY, COLLECTION, DATABASE, DATA_SOURCE }: any) =>
+  ({
+    APP_ID,
+    DATA_API_KEY,
+    COLLECTION,
+    DATABASE,
+    DATA_SOURCE,
+  }: {
+    APP_ID: string;
+    DATA_API_KEY: string;
+    COLLECTION: string;
+    DATABASE: string;
+    DATA_SOURCE: string;
+  }) =>
   (path: string, fields: object) => {
     return fetch(
       `https://data.mongodb-api.com/app/${APP_ID}/endpoint/data/beta/action/${path}`,
@@ -43,7 +60,19 @@ const specialQuery = CreateMongoDBQuery({
   COLLECTION: "special_list",
 });
 
-import { applyGraphQL, gql } from "https://deno.land/x/oak_graphql/mod.ts";
+interface Success {
+  success: Boolean;
+}
+
+type Transaction = {
+  amount: Number;
+  category: [String];
+  date: String;
+  merchant_name: String;
+  hidden: Boolean;
+  _id: String;
+};
+
 const typeDefs = gql`
   type Success {
     success: Boolean
@@ -78,7 +107,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    async transactions() {
+    async transactions(): Promise<Transaction[]> {
       const dataResponse = await transactionQuery("find", {});
       try {
         const { documents } = await dataResponse.json();
@@ -90,7 +119,7 @@ const resolvers = {
       }
       return [];
     },
-    async specials() {
+    async specials(): Promise<String[]> {
       const dataResponse = await specialQuery("findOne", {
         filter: { name: "specials" },
       });
@@ -105,9 +134,19 @@ const resolvers = {
   },
   Mutation: {
     async addTransaction(
-      parent: any,
-      { amount, category, date, merchant_name }: any
-    ) {
+      _: any,
+      {
+        amount,
+        category,
+        date,
+        merchant_name,
+      }: {
+        amount: Number;
+        category: String[];
+        date: String;
+        merchant_name: String;
+      }
+    ): Promise<Transaction> {
       const dataResponse = await transactionQuery("insertOne", {
         document: {
           amount,
@@ -120,79 +159,88 @@ const resolvers = {
         const { document } = await dataResponse.json();
         return document;
       } catch {
-        return {};
+        return {
+          _id: "",
+          amount: 0,
+          category: [""],
+          date: "",
+          hidden: false,
+          merchant_name: "",
+        };
       }
     },
-    async hideTransaction(parent: any, { _id }: any) {
-      const dataResponse = await transactionQuery("updateOne", {
-        filter: { _id: { $oid: _id } },
-        update: {
-          $set: { hidden: true },
-        },
-      });
+    async hideTransaction(_: any, { _id }: { _id: String }): Promise<Success> {
       try {
+        const dataResponse = await transactionQuery("updateOne", {
+          filter: { _id: { $oid: _id } },
+          update: {
+            $set: { hidden: true },
+          },
+        });
+
         const res = await dataResponse.json();
-        return res.document;
+        return { success: true };
       } catch {
-        return {};
+        return { success: false };
       }
     },
-    async showTransaction(parent: any, { _id }: any) {
-      const dataResponse = await transactionQuery("updateOne", {
-        filter: { _id: { $oid: _id } },
-        update: {
-          $set: { hidden: false },
-        },
-      });
+    async showTransaction(_: any, { _id }: { _id: String }): Promise<Success> {
       try {
+        const dataResponse = await transactionQuery("updateOne", {
+          filter: { _id: { $oid: _id } },
+          update: {
+            $set: { hidden: false },
+          },
+        });
         const { document } = await dataResponse.json();
-        return document;
+        return { success: true };
       } catch {
-        return {};
+        return { success: false };
       }
     },
-    async addSpecial(parent: any, { special }: any) {
-      const specials = (await resolvers.Query.specials()) || [];
-      if (!specials.includes(special)) {
-        specials.push(special);
-      }
-      const dataResponse = await specialQuery("updateOne", {
-        filter: { name: "specials" },
-        update: {
-          $set: { special: specials },
-        },
-        upsert: true,
-      });
+    async addSpecial(
+      _: any,
+      { special }: { special: String }
+    ): Promise<Success> {
       try {
+        const specials = (await resolvers.Query.specials()) || [];
+        if (!specials.includes(special)) {
+          specials.push(special);
+        }
+        const dataResponse = await specialQuery("updateOne", {
+          filter: { name: "specials" },
+          update: {
+            $set: { special: specials },
+          },
+          upsert: true,
+        });
         const { document } = await dataResponse.json();
-        return document;
+        return { success: true };
       } catch {
-        return {};
+        return { success: false };
       }
     },
     async removeSpecial(
-      parent: any,
-      { special }: any,
-      context: any,
-      info: any
-    ) {
-      const specials = (await resolvers.Query.specials()) || [];
-      if (specials.includes(special)) {
-        const index = specials.indexOf(special);
-        specials.splice(index, 1);
-      }
-      const dataResponse = await specialQuery("updateOne", {
-        filter: { name: "specials" },
-        update: {
-          $set: { special: specials },
-        },
-        upsert: true,
-      });
+      _: any,
+      { special }: { special: String }
+    ): Promise<Success> {
       try {
+        const specials = (await resolvers.Query.specials()) || [];
+        if (specials.includes(special)) {
+          const index = specials.indexOf(special);
+          specials.splice(index, 1);
+        }
+        const dataResponse = await specialQuery("updateOne", {
+          filter: { name: "specials" },
+          update: {
+            $set: { special: specials },
+          },
+          upsert: true,
+        });
         const { document } = await dataResponse.json();
-        return document;
+        return { success: true };
       } catch {
-        return {};
+        return { success: false };
       }
     },
   },
@@ -209,7 +257,7 @@ const GraphQLRouter = await applyGraphQL<Router>({
 // ////////////////
 const { log } = console;
 
-const serverStartListener = (event: Event) => {
+const serverStartListener = (event: Event): void => {
   log("started:", new Date().toString());
   for (const [key, value] of Object.entries(event)) {
     log(`${key}:`, value);
@@ -217,23 +265,23 @@ const serverStartListener = (event: Event) => {
 };
 
 const app = new Application().use(
-  async (context, next) => {
-    if (context.request.method === "OPTIONS") {
-      context.response.headers.set("Access-Control-Allow-Origin", "*");
-      context.response.headers.set("Access-Control-Allow-Credentials", "true");
-      context.response.headers.set(
+  async ({ request, response }: any, next: Function): Promise<void> => {
+    if (request.method === "OPTIONS") {
+      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set("Access-Control-Allow-Credentials", "true");
+      response.headers.set(
         "Access-Control-Allow-Methods",
         "GET,HEAD,OPTIONS,POST,PUT"
       );
-      context.response.headers.set(
+      response.headers.set(
         "Access-Control-Allow-Headers",
         "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
       );
-      context.response.body = "";
+      response.body = "";
     } else {
       await next();
-      const origin = String(context.request.headers.get("origin"));
-      context.response.headers.set("Access-Control-Allow-Origin", origin);
+      const origin = String(request.headers.get("origin"));
+      response.headers.set("Access-Control-Allow-Origin", origin);
     }
   },
   GraphQLRouter.routes(),
