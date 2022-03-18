@@ -63,7 +63,7 @@ const NewTransactionForm: Component<{ refetch: Function }> = (props: {
           const categories_final = categories()
             .map((x) => `"${x}"`)
             .join(",");
-          const merchant_name_intermediate = merchant_name.value;
+          const merchant_name_intermediate = merchant_name.value.trim();
           if (!merchant_name_intermediate) {
             return alert("merchant name must be provided");
           }
