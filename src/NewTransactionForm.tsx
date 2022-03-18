@@ -24,18 +24,14 @@ const NewTransactionForm: Component<{ refetch: Function }> = (props: {
   let merchant_name: HTMLInputElement,
     date: HTMLInputElement,
     amount: HTMLInputElement;
-  let categoriesElement;
   const [categories, setCategories] = createSignal([]);
   const [loading, setLoading] = createSignal(false);
-  const changeCategories = (selected) => {
-    setCategories(selected);
-  };
 
   return (
     <form class="new-transaction-form">
       <Show
         when={!loading()}
-        fallback={<label>Loading Transaction...</label>}
+        fallback={<label>Adding New Transaction...</label>}
         children={null}
       >
         <h2>Add a new transaction</h2>
@@ -64,7 +60,7 @@ const NewTransactionForm: Component<{ refetch: Function }> = (props: {
           Categories
           <Select
             multiple
-            onChange={changeCategories}
+            onChange={setCategories}
             {...createOptions([], {
               createable: true,
             })}
@@ -103,13 +99,13 @@ const NewTransactionForm: Component<{ refetch: Function }> = (props: {
                   merchant_name: merchant_name_final,
                 });
                 await request(DEFAULT_URI, query);
+                merchant_name.value = "";
+                date.value = "";
+                amount.value = "0.01";
+                setCategories([]);
               } finally {
                 setLoading(false);
                 props.refetch();
-                merchant_name.value = "";
-                categoriesElement.value = "";
-                date.value = "";
-                amount.value = "0";
               }
             }
           }}
