@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { Show, For, createSignal } from "solid-js";
+import { For, createSignal, Suspense } from "solid-js";
 import { request } from "@solid-primitives/graphql";
 import { DEFAULT_URI } from "./settings.js";
 
@@ -63,7 +63,15 @@ const TransactionList: Component<{
   return (
     <div class="transaction-list">
       <table>
-        <Show when={orderedTransactions().length} children={null}>
+        <Suspense
+          fallback={
+            <tr>
+              <td colspan="100%">Loading Transactions...</td>
+            </tr>
+          }
+          children={null}
+        >
+          {/* <Show when={orderedTransactions().length} children={null}> */}
           <tr
             classList={{
               ascending: orderAscending(),
@@ -116,6 +124,7 @@ const TransactionList: Component<{
               Hide
             </th>
           </tr>
+
           <For each={orderedTransactions()} children={null}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
@@ -175,7 +184,8 @@ const TransactionList: Component<{
               );
             }}
           </For>
-        </Show>
+          {/* </Show> */}
+        </Suspense>
       </table>
     </div>
   );
