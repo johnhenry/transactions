@@ -1,7 +1,17 @@
 import type { Component } from "solid-js";
-import { Show, For } from "solid-js";
+import { Show, For, createSignal } from "solid-js";
 import { request } from "@solid-primitives/graphql";
 import { DEFAULT_URI } from "./settings.js";
+
+const sortStrings = (a: string, b: string) => {
+  return a < b ? -1 : a > b ? 1 : 0;
+};
+
+const sortArrays = (a: string[], b: string[]) => {
+  const A = a.sort(sortStrings)[0] || "";
+  const B = b.sort(sortStrings)[0] || "";
+  return sortStrings(A, B);
+};
 
 const TransactionList: Component<{
   transactions: any[];
@@ -12,18 +22,101 @@ const TransactionList: Component<{
   specials: Set<string>;
   refetch: Function;
 }) => {
+  const [orderBy, setOrderBy] = createSignal("");
+  const [orderAscending, setOrderAscending] = createSignal(true);
+  const orderedTransactions = () => {
+    let ordered = props.transactions;
+
+    switch (orderBy()) {
+      case "amount":
+        ordered = props.transactions.sort((a, b) => {
+          return a.amount - b.amount;
+        });
+        break;
+      case "category":
+        ordered = props.transactions.sort((a, b) => {
+          return sortArrays(a.category, b.category);
+        });
+        break;
+      case "date":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.date, b.date);
+        });
+        break;
+      case "merchant_name":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.merchant_name, b.merchant_name);
+        });
+        break;
+      case "hidden":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.hidden, b.hidden);
+        });
+        break;
+    }
+    if (!orderAscending()) {
+      ordered = ordered.reverse();
+    }
+    return ordered;
+  };
+
   return (
     <div class="transaction-list">
       <table>
-        <Show when={props.transactions.length} children={null}>
-          <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Merchant</th>
-            <th>Hide</th>
+        <Show when={orderedTransactions().length} children={null}>
+          <tr
+            classList={{
+              ascending: orderAscending(),
+              descending: !orderAscending(),
+            }}
+          >
+            <th
+              onClick={() => {
+                setOrderBy("amount");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "amount" }}
+            >
+              Amount
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("category");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "category" }}
+            >
+              Category
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("date");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "date" }}
+            >
+              Date
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("merchant_name");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "merchant_name" }}
+            >
+              Merchant
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("hidden");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "hidden" }}
+            >
+              Hide
+            </th>
           </tr>
-          <For each={props.transactions.reverse()} children={null}>
+          <For each={orderedTransactions()} children={null}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
               return (
@@ -35,7 +128,7 @@ const TransactionList: Component<{
                   }}
                 >
                   <td>${transaction.amount}</td>
-                  <td>{transaction.category.join(",")}</td>
+                  <td>{transaction.category.sort(sortStrings).join(",")}</td>
                   <td>{transaction.date}</td>
                   <td>
                     {transaction.merchant_name}{" "}
