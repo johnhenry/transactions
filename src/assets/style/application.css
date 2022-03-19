@@ -1,30 +1,32 @@
 /*
 // ////////////////
-application
+Application
 // ////////////////
 */
 
 /* apply dark theme by default */
 .application,
 .application.dark {
-  --foreground: rgb(255, 255, 255);
-  --midground: rgb(11, 11, 120);
-  --background: rgb(16, 16, 152);
+  --foreground: var(--white);
+  --midground: var(--dark-blue);
+  --background: var(--blue);
+  --shadow: var(--midground) 0 2px 5px 0;
 }
 /* apply light conditionally  */
 
 .application.light {
   /* light theme */
-  --foreground: #333;
-  --midground: #aaa;
-  --background: rgb(248, 248, 248);
+  --foreground: var(--grey);
+  --midground: var(--light-grey);
+  --background: var(--white-off);
 }
 
 @media (prefers-color-scheme: light) {
   .application {
-    --foreground: #333;
-    --midground: #aaa;
-    --background: rgb(182, 182, 182);
+    /* light theme */
+    --foreground: var(--grey);
+    --midground: var(--light-grey);
+    --background: var(--white-off);
   }
 }
 .application {
@@ -35,14 +37,12 @@ application
   overflow: hidden;
 }
 .application > main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
 }
 @media (orientation: landscape) {
   .application > main {
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:

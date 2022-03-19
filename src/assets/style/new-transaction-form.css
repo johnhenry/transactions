@@ -7,7 +7,7 @@ New Transaction Form
   flex: 0 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--padding-minor);
   width: 100%;
   padding: var(--padding);
 }
@@ -27,9 +27,9 @@ New Transaction Form
   justify-items: center;
   width: 100%;
   background-color: var(--midground);
-  padding: 8px;
+  padding: var(--padding-minor);
   border-radius: 8px;
-  min-height: 64px;
+  min-height: var(--padding);
 }
 .new-transaction-form .solid-select-container {
   width: 50%;
@@ -37,30 +37,31 @@ New Transaction Form
 
 .new-transaction-form .solid-select-container .solid-select-list,
 .new-transaction-form .solid-select-container .solid-select-list * {
-  background-color: white;
+  background-color: var(--white);
   padding: var(--padding-minor);
-  color: #333;
+  color: var(--grey);
 }
 
 .new-transaction-form input:not(.solid-select-input) {
-  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
-  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border-radius: var(--corner-radius);
   padding: var(--padding-minor);
-  color: #333;
+  color: var(--grey);
 }
 .new-transaction-form .solid-select-control {
   background-color: white;
-  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
-  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border-radius: var(--corner-radius);
   padding: var(--padding-minor);
-  color: #333;
+  color: var(--grey);
 }
 
 .new-transaction-form button.add-transaction {
   background-color: var(--midground);
-  border: 1px solid var(--midground);
-  border-radius: 8px;
-  box-shadow: var(--midground) 0 2px 5px 0;
-  width: 256px;
-  height: 48px;
+  border: var(--border-size) solid var(--midground);
+  border-radius: var(--corner-radius);
+  box-shadow: var(--shadow);
+  width: 33%;
+  margin-left: auto;
+  padding: var(--padding-minor);
 }

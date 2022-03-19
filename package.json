@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:backend": "export $(cat .env); deno run --allow-net --allow-env backend/index.ts",
-    "start:frontend": "vite",
+    "start:frontend": "vite --host",
     "start": "npm run start:backend && npm run start:frontend",
     "dev": "vite",
     "build": "vite build",

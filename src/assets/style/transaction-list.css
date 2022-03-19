@@ -7,18 +7,19 @@ Transaction List
   grid-area: list;
   width: 100%;
   padding: var(--padding);
-  overflow: scroll;
+  overflow: hidden;
 }
 @media (orientation: landscape) {
   .transaction-list {
     height: 100%;
+    overflow: scroll;
   }
 }
 .transaction-list table {
   width: 100%;
   table-layout: fixed;
   border-collapse: separate;
-  border-spacing: 0 32px;
+  border-spacing: 0 var(--padding-minor);
 }
 
 .transaction-list tr th {
@@ -34,8 +35,20 @@ Transaction List
 
 .transaction-list tr {
   height: 64px;
-  border: 1px solid var(--foreground);
-  border-radius: 8px;
+  border: var(--border-size) solid var(--foreground);
+  border-radius: var(--corner-radius);
   padding: var(--padding-minor);
   box-shadow: var(--midground) 0 2px 5px 0;
+}
+
+.transaction-list td.category {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@media (orientation: landscape) and (min-width: 1600px),
+  (orientation: portrait) and (min-width: 800px) {
+  .transaction-list td {
+    font-size: inherit;
+  }
 }

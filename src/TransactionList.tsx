@@ -127,6 +127,9 @@ const TransactionList: Component<{
           <For each={orderedTransactions()}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
+              let transactions_displayed = transaction.category
+                .sort(sortStrings)
+                .join(", ");
               return (
                 <tr
                   classList={{
@@ -136,7 +139,9 @@ const TransactionList: Component<{
                   }}
                 >
                   <td>${transaction.amount}</td>
-                  <td>{transaction.category.sort(sortStrings).join(",")}</td>
+                  <td class="category" title={transactions_displayed}>
+                    {transactions_displayed}
+                  </td>
                   <td>{transaction.date}</td>
                   <td>
                     {transaction.merchant_name}{" "}
