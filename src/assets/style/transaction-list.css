@@ -97,6 +97,9 @@ Transaction List
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.transaction-list td.category:empty::before {
+  content: "(no category)";
+}
 
 @media (orientation: landscape) and (min-width: 1600px),
   (orientation: portrait) and (min-width: 800px) {

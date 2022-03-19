@@ -127,7 +127,7 @@ const TransactionList: Component<{
           <For each={orderedTransactions()}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
-              let transactions_displayed = transaction.category
+              const transactions_displayed = transaction.category
                 .sort(sortStrings)
                 .join(", ");
               return (

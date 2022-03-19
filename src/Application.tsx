@@ -1,7 +1,6 @@
 import type { Component } from "solid-js";
 /* @refresh reload */
 
-// import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
 import { createSignal, Show, createEffect, ResourceReturn } from "solid-js";
 import TransactionList from "./TransactionList";
