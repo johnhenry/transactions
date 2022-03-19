@@ -1,0 +1,17 @@
+/*
+// ////////////////
+Horizontal Bar Graph
+// ////////////////
+*/
+
+.horizontal-bar {
+  width: 80px;
+  height: 16rem;
+  background-color: var(--midground);
+  border: 1px solid var(--midground);
+  display: inline-block;
+}
+.horizontal-bar .bar {
+  display: block;
+  background-color: red;
+}

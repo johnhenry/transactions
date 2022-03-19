@@ -4,6 +4,10 @@ Application
 // ////////////////
 */
 
+#application-root {
+  display: contents;
+}
+
 /* apply dark theme by default */
 .application,
 .application.dark {
@@ -40,6 +44,40 @@ Application
   height: 100%;
   overflow: scroll;
 }
+
+.application header {
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  background-color: var(--midground);
+  padding: 8px;
+  font-size: 24rem;
+}
+
+.application header .color-scheme-button::before {
+  content: "◠";
+}
+
+.application header .dark .color-scheme-button::before {
+  content: "☾";
+}
+
+.application header .light .color-scheme-button::before {
+  content: "☼";
+}
+
+.application .not-showing {
+  background-color: var(--midground);
+}
+.application .bezos-colored {
+  color: red;
+}
+
 @media (orientation: landscape) {
   .application > main {
     overflow: hidden;
