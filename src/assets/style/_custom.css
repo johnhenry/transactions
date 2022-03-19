@@ -1,0 +1,12 @@
+:root {
+  --header-height: 64px;
+  --padding: 32px;
+  --padding-minor: 8px;
+  --font-size: 16rem;
+}
+@media (orientation: landscape) {
+  :root {
+    --padding: 64px;
+    --padding-minor: 8px;
+  }
+}

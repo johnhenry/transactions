@@ -1,0 +1,52 @@
+/*
+// ////////////////
+application
+// ////////////////
+*/
+
+/* apply dark theme by default */
+.application,
+.application.dark {
+  --foreground: rgb(255, 255, 255);
+  --midground: rgb(11, 11, 120);
+  --background: rgb(16, 16, 152);
+}
+/* apply light conditionally  */
+
+.application.light {
+  /* light theme */
+  --foreground: #333;
+  --midground: #aaa;
+  --background: rgb(248, 248, 248);
+}
+
+@media (prefers-color-scheme: light) {
+  .application {
+    --foreground: #333;
+    --midground: #aaa;
+    --background: rgb(182, 182, 182);
+  }
+}
+.application {
+  background-color: var(--background);
+  color: var(--foreground);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.application > main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+@media (orientation: landscape) {
+  .application > main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "form info"
+      "form list";
+  }
+}

@@ -1,0 +1,41 @@
+/*
+// ////////////////
+Transaction List
+// ////////////////
+*/
+.transaction-list {
+  grid-area: list;
+  width: 100%;
+  padding: var(--padding);
+  overflow: scroll;
+}
+@media (orientation: landscape) {
+  .transaction-list {
+    height: 100%;
+  }
+}
+.transaction-list table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 32px;
+}
+
+.transaction-list tr th {
+  cursor: pointer;
+}
+
+.transaction-list .ascending .order-by::after {
+  content: " ▲";
+}
+.transaction-list .descending .order-by::after {
+  content: " ▼";
+}
+
+.transaction-list tr {
+  height: 64px;
+  border: 1px solid var(--foreground);
+  border-radius: 8px;
+  padding: var(--padding-minor);
+  box-shadow: var(--midground) 0 2px 5px 0;
+}
