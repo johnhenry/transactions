@@ -63,11 +63,11 @@ Application
   content: "◠";
 }
 
-.application header .dark .color-scheme-button::before {
+.application.dark header .color-scheme-button::before {
   content: "☾";
 }
 
-.application header .light .color-scheme-button::before {
+.application.light header .color-scheme-button::before {
   content: "☼";
 }
 
