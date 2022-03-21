@@ -58,7 +58,8 @@ Application
   justify-items: center;
   width: 100%;
   background-color: var(--midground);
-  padding: 8px;
+  padding: var(--padding-minor);
+  gap: var(--padding-minor);
   font-size: 24rem;
 }
 .application header .logo {
