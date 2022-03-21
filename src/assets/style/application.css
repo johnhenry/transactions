@@ -11,9 +11,9 @@ Application
 /* apply dark theme by default */
 .application,
 .application.dark {
-  --foreground: var(--white);
-  --midground: var(--dark-blue);
-  --background: var(--blue);
+  --foreground: var(--foreground-dark);
+  --midground: var(--midground-dark);
+  --background: var(--background-dark);
   --logo: var(--logo-dark);
   --shadow: var(--midground) 0 2px 5px 0;
 }
@@ -21,18 +21,18 @@ Application
 
 .application.light {
   /* light theme */
-  --foreground: var(--grey);
-  --midground: var(--light-grey);
-  --background: var(--white-off);
+  --foreground: var(--foreground-light);
+  --midground: var(--midground-light);
+  --background: var(--background-light);
   --logo: var(--logo-light);
 }
 
 @media (prefers-color-scheme: light) {
   .application {
     /* light theme */
-    --foreground: var(--grey);
-    --midground: var(--light-grey);
-    --background: var(--white-off);
+    --foreground: var(--foreground-light);
+    --midground: var(--midground-light);
+    --background: var(--background-light);
     --logo: var(--logo-light);
   }
 }
@@ -70,7 +70,7 @@ Application
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 50%;
-  border: 1px solid var(--foreground);
+  border: var(--border-size) solid var(--foreground);
 }
 
 .application header .color-scheme-button::before {

@@ -1,20 +1,19 @@
 :root {
+  /* colors */
   --white: rgb(255, 255, 255);
   --dark-blue: rgb(11, 11, 120);
   --blue: rgb(16, 16, 152);
   --grey: #333;
   --light-grey: #aaa;
   --white-off: rgb(248, 248, 248);
-  --logo-light: url("/src/assets/image/faris_day_time.svg");
-  --logo-dark: url("/src/assets/image/faris_after_dark.svg");
+  /* spacing */
   --header-height: 64px;
   --logo-height: calc(var(--header-height) * 2 / 3);
   --padding: 32px;
   --padding-minor: 8px;
-  --font-size: 12rem;
-
   --corner-radius: 8px;
   --border-size: 1px;
+  --font-size: 12rem;
 }
 @media (orientation: landscape) {
   :root {
@@ -22,6 +21,7 @@
     --padding-minor: 16px;
   }
 }
+
 @media (orientation: landscape) and (min-width: 1600px),
   (orientation: portrait) and (min-width: 800px) {
   :root {

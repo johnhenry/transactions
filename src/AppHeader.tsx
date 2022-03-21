@@ -10,7 +10,7 @@ const AppHeader: Component<{
       <button
         class="color-scheme-button"
         title={`Click to change color scheme. Currently: ${
-          props.colorSchemePreference() || "system preference"
+          props.colorSchemePreference() || "(system preference)"
         }`}
         onClick={() => {
           switch (props.colorSchemePreference()) {
