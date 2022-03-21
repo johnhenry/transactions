@@ -23,4 +23,4 @@ const app: Application = new Application().use(
   GraphQLRouter.allowedMethods()
 );
 app.addEventListener("listen", printEvent);
-await app.listen({ port: PORT });
+await app.listen({ port: PORT as number });

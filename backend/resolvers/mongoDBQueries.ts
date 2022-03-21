@@ -9,11 +9,11 @@ const CreateMongoDBQuery =
     DATABASE,
     DATA_SOURCE,
   }: {
-    APP_ID: string;
-    DATA_API_KEY: string;
-    COLLECTION: string;
-    DATABASE: string;
-    DATA_SOURCE: string;
+    APP_ID: String;
+    DATA_API_KEY: String;
+    COLLECTION: String;
+    DATABASE: String;
+    DATA_SOURCE: String;
   }) =>
   (path: string, fields: object) => {
     return fetch(
@@ -22,7 +22,7 @@ const CreateMongoDBQuery =
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "api-key": DATA_API_KEY,
+          "api-key": DATA_API_KEY as string,
         },
         body: JSON.stringify({
           collection: COLLECTION,
