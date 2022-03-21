@@ -5,8 +5,10 @@
   --grey: #333;
   --light-grey: #aaa;
   --white-off: rgb(248, 248, 248);
-
+  --logo-light: url("/src/assets/image/faris_day_time.svg");
+  --logo-dark: url("/src/assets/image/faris_after_dark.svg");
   --header-height: 64px;
+  --logo-height: calc(var(--header-height) * 2 / 3);
   --padding: 32px;
   --padding-minor: 8px;
   --font-size: 12rem;

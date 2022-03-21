@@ -14,6 +14,7 @@ Application
   --foreground: var(--white);
   --midground: var(--dark-blue);
   --background: var(--blue);
+  --logo: var(--logo-dark);
   --shadow: var(--midground) 0 2px 5px 0;
 }
 /* apply light conditionally  */
@@ -23,6 +24,7 @@ Application
   --foreground: var(--grey);
   --midground: var(--light-grey);
   --background: var(--white-off);
+  --logo: var(--logo-light);
 }
 
 @media (prefers-color-scheme: light) {
@@ -31,6 +33,7 @@ Application
     --foreground: var(--grey);
     --midground: var(--light-grey);
     --background: var(--white-off);
+    --logo: var(--logo-light);
   }
 }
 .application {
@@ -57,6 +60,16 @@ Application
   background-color: var(--midground);
   padding: 8px;
   font-size: 24rem;
+}
+.application header .logo {
+  width: var(--logo-height);
+  height: var(--logo-height);
+  background-image: var(--logo);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  border: 1px solid var(--foreground);
 }
 
 .application header .color-scheme-button::before {
