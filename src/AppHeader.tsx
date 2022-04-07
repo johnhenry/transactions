@@ -1,11 +1,16 @@
-const AppHeader = (props: any) => (
+import type { Component } from "solid-js";
+
+const AppHeader: Component<{
+  colorSchemePreference: Function;
+  updateColorSchemePreference: Function;
+}> = (props: any) => (
   <header>
-    <div class="logo"> Faris's Transactions</div>
+    <div class="logo"> </div> Faris's Transactions
     <div style={{ "margin-left": "auto" }}>
       <button
         class="color-scheme-button"
         title={`Click to change color scheme. Currently: ${
-          props.colorSchemePreference() || "system preference"
+          props.colorSchemePreference() || "(system preference)"
         }`}
         onClick={() => {
           switch (props.colorSchemePreference()) {

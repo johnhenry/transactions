@@ -1,7 +1,9 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect } from "solid-js";
+import { Show } from "solid-js";
 
-const HorizontalBar: Component = (props: { percentage: String }) => {
+const HorizontalBar: Component<{ percentage: string }> = (props: {
+  percentage: string;
+}) => {
   // const percentage = (props.value / props.max) * 100;
   return (
     <Show when={props.percentage !== "NaN%"} fallback={"(calculating...)"}>

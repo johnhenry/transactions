@@ -1,0 +1,67 @@
+/*
+// ////////////////
+New Transaction Form
+// ////////////////
+*/
+.new-transaction-form {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-minor);
+  width: 100%;
+  padding: var(--padding);
+}
+
+@media screen and (orientation: landscape) {
+  .new-transaction-form {
+    grid-area: form;
+    height: 100%;
+  }
+}
+
+.new-transaction-form label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  background-color: var(--midground);
+  padding: var(--padding-minor);
+  border-radius: 8px;
+  min-height: var(--padding);
+}
+.new-transaction-form .solid-select-container {
+  width: 50%;
+}
+
+.new-transaction-form .solid-select-container .solid-select-list,
+.new-transaction-form .solid-select-container .solid-select-list * {
+  background-color: var(--white);
+  padding: var(--padding-minor);
+  color: var(--grey);
+}
+
+.new-transaction-form input:not(.solid-select-input) {
+  box-shadow: var(--shadow);
+  border-radius: var(--corner-radius);
+  padding: var(--padding-minor);
+  color: var(--grey);
+}
+.new-transaction-form .solid-select-control {
+  background-color: white;
+  box-shadow: var(--shadow);
+  border-radius: var(--corner-radius);
+  padding: var(--padding-minor);
+  color: var(--grey);
+}
+
+.new-transaction-form button.add-transaction {
+  background-color: var(--midground);
+  border: var(--border-size) solid var(--midground);
+  border-radius: var(--corner-radius);
+  box-shadow: var(--shadow);
+  width: 33%;
+  margin-left: auto;
+  padding: var(--padding-minor);
+}

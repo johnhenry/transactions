@@ -1,0 +1,4 @@
+.info {
+  grid-area: info;
+  padding: var(--padding);
+}

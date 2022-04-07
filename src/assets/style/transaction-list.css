@@ -1,0 +1,109 @@
+/*
+// ////////////////
+Transaction List
+// ////////////////
+*/
+.transaction-list {
+  grid-area: list;
+  width: 100%;
+  padding: var(--padding);
+  overflow: hidden;
+}
+@media (orientation: landscape) {
+  .transaction-list {
+    height: 100%;
+    overflow: scroll;
+  }
+}
+.transaction-list table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 var(--padding-minor);
+}
+
+.transaction-list tr th {
+  cursor: pointer;
+}
+
+.transaction-list .ascending .order-by::after {
+  content: " ▲";
+}
+.transaction-list .descending .order-by::after {
+  content: " ▼";
+}
+
+.transaction-list tr {
+  height: 64px;
+  border: var(--border-size) solid var(--foreground);
+  border-radius: var(--corner-radius);
+  padding: var(--padding-minor);
+  box-shadow: var(--midground) 0 2px 5px 0;
+}
+
+.transaction-list tr:first-child {
+  position: sticky;
+  background-color: var(--background);
+
+  top: calc(-1 * var(--padding));
+}
+
+.transaction-list tr.bezos {
+  border-radius: 8px;
+  padding: var(--padding-minor);
+  box-shadow: var(--midground) 0 2px 5px 0;
+}
+.transaction-list tr.not-showing.bezos {
+  color: darkred;
+}
+
+.transaction-list tr td {
+  text-align: center;
+}
+
+.transaction-list button.hide::before {
+  content: "Hide";
+}
+
+.transaction-list tr.not-showing button.hide::before {
+  content: "Show";
+}
+
+.transaction-list button.bezoslist::before {
+  content: "+";
+}
+
+.transaction-list tr.bezos button.bezoslist::before {
+  content: "-";
+}
+
+.transaction-list button.hide::before {
+  content: "Hide";
+}
+
+.transaction-list tr.not-showing button.hide::before {
+  content: "Show";
+}
+
+.transaction-list button.bezoslist::before {
+  content: "+";
+}
+
+.transaction-list tr.bezos button.bezoslist::before {
+  content: "-";
+}
+
+.transaction-list td.category {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.transaction-list td.category:empty::before {
+  content: "(no category)";
+}
+
+@media (orientation: landscape) and (min-width: 1600px),
+  (orientation: portrait) and (min-width: 800px) {
+  .transaction-list td {
+    font-size: inherit;
+  }
+}

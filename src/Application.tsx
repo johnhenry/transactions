@@ -1,15 +1,16 @@
 import type { Component } from "solid-js";
 /* @refresh reload */
 
-import "./index.css";
 import { createGraphQLClient, gql } from "@solid-primitives/graphql";
-import { createSignal, Show, createEffect } from "solid-js";
+import { createSignal, Show, createEffect, ResourceReturn } from "solid-js";
 import TransactionList from "./TransactionList";
 import NewTransactionForm from "./NewTransactionForm";
 import HorizontalBar from "./HorizontalBar";
 import AppHeader from "./AppHeader";
 
-import { DEFAULT_URI } from "./settings.js";
+import { DEFAULT_URI } from "./settings";
+
+import { Transaction } from "../backend/resolvers/types";
 
 const App: Component = () => {
   const [URI, updateURI] = createSignal(DEFAULT_URI);
@@ -22,7 +23,10 @@ const App: Component = () => {
 
   const [showHidden, updateShowHidden] = createSignal(false);
   const clientResource = createGraphQLClient(URI());
-  const [data, { refetch }] = clientResource(
+  const [data, { refetch }]: ResourceReturn<{
+    specials: (never | string)[];
+    transactions: (never | Transaction)[];
+  }> = clientResource(
     gql`
       query {
         specials
@@ -101,17 +105,20 @@ const App: Component = () => {
               column
             </p>
             <p>
-              Show Hidden Transactions{" "}
-              <input
-                type="checkbox"
-                onInput={(event) => {
-                  updateShowHidden(event.target.checked);
-                }}
-              />
+              <label>
+                {" "}
+                <input
+                  type="checkbox"
+                  onInput={(event) => {
+                    updateShowHidden(event.target.checked);
+                  }}
+                />{" "}
+                Show Hidden Transactions
+              </label>
             </p>
             <Show when={showHidden()}>
               <p>
-                Hidden transactions Have a{" "}
+                Hidden transactions have a{" "}
                 <span class="not-showing">dark bakckground</span>.
               </p>
             </Show>

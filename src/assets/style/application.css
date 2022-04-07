@@ -1,0 +1,104 @@
+/*
+// ////////////////
+Application
+// ////////////////
+*/
+
+#application-root {
+  display: contents;
+}
+
+/* apply dark theme by default */
+.application,
+.application.dark {
+  --foreground: var(--foreground-dark);
+  --midground: var(--midground-dark);
+  --background: var(--background-dark);
+  --logo: var(--logo-dark);
+  --shadow: var(--midground) 0 2px 5px 0;
+}
+/* apply light conditionally  */
+
+.application.light {
+  /* light theme */
+  --foreground: var(--foreground-light);
+  --midground: var(--midground-light);
+  --background: var(--background-light);
+  --logo: var(--logo-light);
+}
+
+@media (prefers-color-scheme: light) {
+  .application {
+    /* light theme */
+    --foreground: var(--foreground-light);
+    --midground: var(--midground-light);
+    --background: var(--background-light);
+    --logo: var(--logo-light);
+  }
+}
+.application {
+  background-color: var(--background);
+  color: var(--foreground);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.application > main {
+  height: 100%;
+  overflow: scroll;
+}
+
+.application header {
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  background-color: var(--midground);
+  padding: var(--padding-minor);
+  gap: var(--padding-minor);
+  font-size: 24rem;
+}
+.application header .logo {
+  width: var(--logo-height);
+  height: var(--logo-height);
+  background-image: var(--logo);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  border: var(--border-size) solid var(--foreground);
+}
+
+.application header .color-scheme-button::before {
+  content: "◠";
+}
+
+.application.dark header .color-scheme-button::before {
+  content: "☾";
+}
+
+.application.light header .color-scheme-button::before {
+  content: "☼";
+}
+
+.application .not-showing {
+  background-color: var(--midground);
+}
+.application .bezos-colored {
+  color: red;
+}
+
+@media (orientation: landscape) {
+  .application > main {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "form info"
+      "form list";
+  }
+}

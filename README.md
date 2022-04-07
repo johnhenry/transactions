@@ -4,10 +4,10 @@
   - [Backend Application](#backend-application)
     - [Interface](#interface)
     - [Requirements](#requirements)
-    - [Local Backend via via Deno (Option 1)](#local-backend-via-via-deno-option-1)
+    - [Local Backend via Deno (Option 1)](#local-backend-via-deno-option-1)
     - [Remote Backend (Option 2)](#remote-backend-option-2)
   - [Frontend Application](#frontend-application)
-    - [User Interface](#user-interface)
+    - [Interface](#interface-1)
     - [Requirements](#requirements-1)
     - [Run Locally](#run-locally)
     - [Build Static](#build-static)
@@ -64,7 +64,7 @@ To run the backend locally, you'll need to install [deno](https://deno.land). Al
 
 Additionally, you'll need remote access to an instance of a Mongo DB. You can set up a free one by following [these instructions](https://www.mongodb.com/developer/article/getting-started-deno-mongodb/#setting-up-the-mongodb-data-api). Take Note of your **DATA_API_KEY** and your **APP_ID**.
 
-### Local Backend via via [Deno](https://deno.land/) (Option 1)
+### Local Backend via [Deno](https://deno.land/) (Option 1)
 
 Create a file in the root directory called `.env` and add the following lines:
 
@@ -84,14 +84,14 @@ export $(cat .env)
 Run the server with.
 
 ```sh
-run `deno run --allow-net --allow-env backend.tsx`
+run `deno run --allow-net --allow-env backend/index.tsx`
 ```
 
 the server will be accessible at `http://localhost:8080/graphql`
 
 ### Remote Backend (Option 2)
 
-This backend can be run remotely on [Deno.com](https://deno.com/). Simply create a project point it to the `backend.ts` file on github. Alternatively, you can create a "playground" and paste the code directly from this file.
+This backend can be run remotely on [Deno.com](https://deno.com/). Simply create a project point it to the `backend/index.ts` file on github. Alternatively, you can run `deno bundle backend/index.ts` and paste the resulting text directly into a "playground".
 
 Be sure to set your **DATA_API_KEY** and your **APP_ID** environment variables appropriately for the project.
 
@@ -99,7 +99,7 @@ the server will be accessible at `https://<your project name>deno.dev/graphql`
 
 ## Frontend Application
 
-### User Interface
+### Interface
 
 The application is split into three main components:
 

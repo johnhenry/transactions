@@ -1,27 +1,135 @@
 import type { Component } from "solid-js";
-import { createSignal, Show, For } from "solid-js";
-import { gql, request } from "@solid-primitives/graphql";
-import { DEFAULT_URI } from "./settings.js";
+import { For, createSignal, Suspense } from "solid-js";
+import { request } from "@solid-primitives/graphql";
+import { DEFAULT_URI } from "./settings";
 
-const TransactionList: Component = (props: {
-  transactions: [];
-  specials: Set;
+const sortStrings = (a: string, b: string) => {
+  return a < b ? -1 : a > b ? 1 : 0;
+};
+
+const sortArrays = (a: string[], b: string[]) => {
+  const A = a.sort(sortStrings)[0] || "";
+  const B = b.sort(sortStrings)[0] || "";
+  return sortStrings(A, B);
+};
+
+const TransactionList: Component<{
+  transactions: any[];
+  specials: Set<string>;
+  refetch: Function;
+}> = (props: {
+  transactions: any[];
+  specials: Set<string>;
   refetch: Function;
 }) => {
+  const [orderBy, setOrderBy] = createSignal("");
+  const [orderAscending, setOrderAscending] = createSignal(true);
+  const orderedTransactions = () => {
+    let ordered = props.transactions;
+
+    switch (orderBy()) {
+      case "amount":
+        ordered = props.transactions.sort((a, b) => {
+          return a.amount - b.amount;
+        });
+        break;
+      case "category":
+        ordered = props.transactions.sort((a, b) => {
+          return sortArrays(a.category, b.category);
+        });
+        break;
+      case "date":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.date, b.date);
+        });
+        break;
+      case "merchant_name":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.merchant_name, b.merchant_name);
+        });
+        break;
+      case "hidden":
+        ordered = props.transactions.sort((a, b) => {
+          return sortStrings(a.hidden, b.hidden);
+        });
+        break;
+    }
+    if (!orderAscending()) {
+      ordered = ordered.reverse();
+    }
+    return ordered;
+  };
+
   return (
     <div class="transaction-list">
       <table>
-        <Show when={props.transactions.length}>
-          <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Merchant</th>
-            <th>Hide</th>
+        <Suspense
+          fallback={
+            <tr>
+              <td colspan="100%">Loading Transactions...</td>
+            </tr>
+          }
+        >
+          {/* <Show when={orderedTransactions().length} > */}
+          <tr
+            classList={{
+              ascending: orderAscending(),
+              descending: !orderAscending(),
+            }}
+          >
+            <th
+              onClick={() => {
+                setOrderBy("amount");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "amount" }}
+            >
+              Amount
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("category");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "category" }}
+            >
+              Category
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("date");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "date" }}
+            >
+              Date
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("merchant_name");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "merchant_name" }}
+            >
+              Merchant
+            </th>
+            <th
+              onClick={() => {
+                setOrderBy("hidden");
+                setOrderAscending(!orderAscending());
+              }}
+              classList={{ "order-by": orderBy() === "hidden" }}
+            >
+              Hide
+            </th>
           </tr>
-          <For each={props.transactions}>
+
+          <For each={orderedTransactions()}>
             {(transaction: any) => {
               const bezos = props.specials.has(transaction.merchant_name);
+              const transactions_displayed = transaction.category
+                .sort(sortStrings)
+                .join(", ");
               return (
                 <tr
                   classList={{
@@ -31,7 +139,9 @@ const TransactionList: Component = (props: {
                   }}
                 >
                   <td>${transaction.amount}</td>
-                  <td>{transaction.category.join(",")}</td>
+                  <td class="category" title={transactions_displayed}>
+                    {transactions_displayed}
+                  </td>
                   <td>{transaction.date}</td>
                   <td>
                     {transaction.merchant_name}{" "}
@@ -50,7 +160,9 @@ const TransactionList: Component = (props: {
                         );
                         props.refetch();
                       }}
-                    ></button>
+                    >
+                      {" "}
+                    </button>
                   </td>
                   <td>
                     <button
@@ -68,13 +180,16 @@ const TransactionList: Component = (props: {
                         );
                         props.refetch();
                       }}
-                    ></button>
+                    >
+                      {" "}
+                    </button>
                   </td>
                 </tr>
               );
             }}
           </For>
-        </Show>
+          {/* </Show> */}
+        </Suspense>
       </table>
     </div>
   );
