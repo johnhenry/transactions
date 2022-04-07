@@ -1,0 +1,478 @@
+_type: export
+__export_format: 4
+__export_date: 2022-04-06T18:24:10.911Z
+__export_source: insomnia.desktop.app:v2022.2.0
+resources:
+  - _id: req_63af336a0eff44a38c39fea97b845f47
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1647367234255
+    created: 1647277767591
+    url: https://61b3dea5af5ff70017ca20bf.mockapi.io/transactions
+    name: Data
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1647367228495
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_7549acdaa2bb49e18e520a155030a9f9
+    parentId: null
+    modified: 1636948128827
+    created: 1636948128827
+    name: My Collection
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_af01bc7683764c958c0388a970c1857b
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647397524409
+    created: 1647318447162
+    url: http://localhost:8080/graphql
+    name: Query:specials
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  specials\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900553.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1647367228445
+    created: 1647367228445
+    name: Local
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1647367228445
+    _type: request_group
+  - _id: req_b88395621b0e4069bf259fbd04ebfd36
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647415044480
+    created: 1647318747074
+    url: http://localhost:8080/graphql
+    name: Query:transactions
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  transactions
+        {\n    amount\n    category\n    date\n    merchant_name\n    _id\n\t\thidden\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900603.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_526ebb0dbd9d4981ac30d2740e9f84f8
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647415041533
+    created: 1647318943390
+    url: http://localhost:8080/graphql
+    name: Mutate:addTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation {\n  addTransaction(amount: 43.32, category:
+        [\"alpha\", \"beta\"], date: \"2002-2-2\", merchant_name:\"amazon\")
+        {\n    _id\n  }\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900453.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ac2ff5e1080442938a6b34c2615c4a4c
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647367282079
+    created: 1647319938787
+    url: http://localhost:8080/graphql
+    name: Mutate:addSpecial
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  addSpecial(special:\"add\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900503.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_71c7c32288ab4e99ba76b6237fe8e4ba
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647367292020
+    created: 1647320832804
+    url: http://localhost:8080/graphql
+    name: Mutate:removeSpecial
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  removeSpecial(special:\"wer\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900303.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_58ef718b6a694fa8922bb598b31f332f
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647367286093
+    created: 1647322761457
+    url: http://localhost:8080/graphql
+    name: Mutate:hideTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  hideTransaction(_id:\"623024c1f11144848fbefde0\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900403.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cb7c0c80c6514b56925280227cdbc085
+    parentId: fld_44a6d622fd7a429baa2ca1bb8c8b5729
+    modified: 1647367289975
+    created: 1647323405430
+    url: http://localhost:8080/graphql
+    name: Mutate:showTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  showTransaction(_id:\"623024c1f11144848fbefde0\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900353.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_03d443ba79dd499bae0cd87dbb8d2c29
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647399741748
+    created: 1647399741748
+    url: http://localhost:8080/graphql
+    name: Query:specials
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  specials\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900553.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_2eed77400f784a47bf40d6c170dc9633
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1647399741742
+    created: 1647399741742
+    name: Remote
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1647367228395
+    _type: request_group
+  - _id: req_52b755ff74454297b55f8b9eea123ca1
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1649269367637
+    created: 1647399741771
+    url: https://afraid-spider-68.deno.dev/graphql
+    name: Query:transactions
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  transactions
+        {\n    amount\n    category\n    date\n    merchant_name\n    _id\n\t\thidden\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900603.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_49b8e18926144527aebd66f3be6ebc91
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647399741787
+    created: 1647399741787
+    url: http://localhost:8080/graphql
+    name: Mutate:addTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation {\n  addTransaction(amount: 43.32, category:
+        [\"alpha\", \"beta\"], date: \"2002-2-2\", merchant_name:\"amazon\")
+        {\n    _id\n  }\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900453.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ba37fadef98f4811b74cbe8f3f675936
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647399741796
+    created: 1647399741796
+    url: http://localhost:8080/graphql
+    name: Mutate:addSpecial
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  addSpecial(special:\"add\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900503.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7ccf4a12f57c4e9a89ca31212d2348de
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647405846794
+    created: 1647399741809
+    url: http://localhost:8080/graphql
+    name: Mutate:removeSpecial
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  removeSpecial(special:\"wer\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900303.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_10c6c5ccf4534acfb5baaeea97a50ea6
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647401629978
+    created: 1647399741823
+    url: http://localhost:8080/graphql
+    name: Mutate:hideTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  hideTransaction(_id:\"623024c1f11144848fbefde0\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900403.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a38f3dcd85dd4bd6939c39865e27bece
+    parentId: fld_2eed77400f784a47bf40d6c170dc9633
+    modified: 1647399741839
+    created: 1647399741839
+    url: http://localhost:8080/graphql
+    name: Mutate:showTransaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"mutation
+        {\n  showTransaction(_id:\"623024c1f11144848fbefde0\"){\n\t\tsuccess\n\t}\n}"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e99b7cc5b4f049dc875c7dcb5e12b755
+    authentication: {}
+    metaSortKey: -1647198900353.8057
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_be61491ed61f5bc0c559932f87344f78f2c79e31
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1636948128835
+    created: 1636948128835
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1636948128835
+    _type: environment
+  - _id: jar_be61491ed61f5bc0c559932f87344f78f2c79e31
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1640966697240
+    created: 1636948128837
+    name: Default Jar
+    cookies:
+      - key: 1P_JAR
+        value: 2021-12-31-16
+        expires: 2022-01-30T16:04:57.000Z
+        domain: google.com
+        path: /
+        secure: true
+        hostOnly: false
+        creation: 2021-12-31T16:04:33.584Z
+        lastAccessed: 2021-12-31T16:04:57.239Z
+        id: "5587313063772898"
+      - key: NID
+        value: 511=ljO1nS91rx_mLVkhhSOjSxokKInZNL-GGAJM-cVPDuALjAsnMtbovOYdykpi1Vw2FNgETg7mScALxBtnoCVWBIOZFTCk8JN660DFrZyJfp_7CkuXdAzCIJ2p71vrb1A5ZCA-wxO2S_UhRP__1eMWQ08pIbYI1bs8uuHOPB4GPsI
+        expires: 2022-07-02T16:04:48.000Z
+        domain: google.com
+        path: /
+        httpOnly: true
+        hostOnly: false
+        creation: 2021-12-31T16:04:33.587Z
+        lastAccessed: 2021-12-31T16:04:48.895Z
+        id: "09175180417286133"
+    _type: cookie_jar
+  - _id: spc_7df7739535154340887e029dc56ff249
+    parentId: wrk_7549acdaa2bb49e18e520a155030a9f9
+    modified: 1636948128829
+    created: 1636948128829
+    fileName: My Collection
+    contents: ""
+    contentType: yaml
+    _type: api_spec

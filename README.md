@@ -16,9 +16,9 @@ This is an application that allows currly-haired Faris to manage transactions in
 
 It exists in two parts: a backend built for [deno](https://deno.land) with a graphQL API and a frontend built primarily using [solidjs](https://solidjs.com).
 
-There is an instance of the backend hosted [here](https://afraid-spider-69.deno.dev/graphql).
+There is an instance of the backend hosted [here](https://afraid-spider-68.deno.dev/graphql).
 
-There is an instance of the frontend hosted [here](https://transactions-b.vercel.app/).
+There is an instance of the frontend hosted [here](https://transactions-lovat.vercel.app/).
 
 ## Backend Application
 
