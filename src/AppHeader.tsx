@@ -5,7 +5,7 @@ const AppHeader: Component<{
   updateColorSchemePreference: Function;
 }> = (props: any) => (
   <header>
-    <div class="logo"> </div> Faris's Transactions
+    <div class="logo"> </div> John's Transactions
     <div style={{ "margin-left": "auto" }}>
       <button
         class="color-scheme-button"

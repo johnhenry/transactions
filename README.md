@@ -12,7 +12,7 @@
     - [Run Locally](#run-locally)
     - [Build Static](#build-static)
 
-This is an application that allows currly-haired Faris to manage transactions in 2029.
+This is an application that allows currly-haired John to manage transactions in 2029.
 
 It exists in two parts: a backend built for [deno](https://deno.land) with a graphQL API and a frontend built primarily using [solidjs](https://solidjs.com).
 
@@ -103,11 +103,11 @@ the server will be accessible at `https://<your project name>deno.dev/graphql`
 
 The application is split into three main components:
 
-- Using the "New Transaction form" component, Faris can add to a list of Transactions.
+- Using the "New Transaction form" component, John can add to a list of Transactions.
 
-- Using the "Transaction List" component Faris can view a list of transactions, hide and show them, and mark them as "Bezos companies".
+- Using the "Transaction List" component John can view a list of transactions, hide and show them, and mark them as "Bezos companies".
 
-- Using the Totals Counter component, Faris can view the total amount of money spent vs the total amount spent on Bezos companies.
+- Using the Totals Counter component, John can view the total amount of money spent vs the total amount spent on Bezos companies.
 
 ### Requirements
 

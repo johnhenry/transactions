@@ -3,12 +3,12 @@
   --foreground-dark: var(--white);
   --midground-dark: var(--dark-blue);
   --background-dark: var(--blue);
-  --logo-dark: url("/src/assets/image/faris_after_dark.svg");
+  --logo-dark: url("/src/assets/image/john_after_dark.svg");
   /* theme:light */
   --foreground-light: var(--grey);
   --midground-light: var(--light-grey);
   --background-light: var(--white-off);
-  --logo-light: url("/src/assets/image/faris_day_time.svg");
+  --logo-light: url("/src/assets/image/john_day_time.svg");
 }
 
 /* apply dark theme by default */
