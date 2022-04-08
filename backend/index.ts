@@ -1,26 +1,18 @@
 //@ts-ignore
-import { Router, Application } from "https://deno.land/x/oak/mod.ts";
-// @ts-ignore
-import { applyGraphQL } from "https://deno.land/x/oak_graphql/mod.ts";
+import { Application } from "https://deno.land/x/oak/mod.ts";
+//@ts-ignore
+import log from "https://johnhenry.github.io/lib/js/log-dictionary/0.0.0/index.mjs";
+//@ts-ignore
+import CreateCORSMiddleware from "https://johnhenry.github.io/lib/js/cors-helper/0.0.0/oak-middleware.mjs";
 //@ts-ignore
 import { PORT } from "./settings.ts";
 //@ts-ignore
-import typeDefs from "./typeDefs.ts";
-//@ts-ignore
-import resolvers from "./resolvers/index.ts";
-//@ts-ignore
-import CORSRoute from "./CORSRoute.ts";
-//@ts-ignore
-import printEvent from "./printEvent.ts";
-const GraphQLRouter: Router = await applyGraphQL<Router>({
-  Router,
-  typeDefs,
-  resolvers,
-});
+import router from "./graphQLRouter/index.ts";
+const CORS = CreateCORSMiddleware();
 const app: Application = new Application().use(
-  CORSRoute,
-  GraphQLRouter.routes(),
-  GraphQLRouter.allowedMethods()
+  CORS,
+  router.routes(),
+  router.allowedMethods()
 );
-app.addEventListener("listen", printEvent);
+app.addEventListener("listen", log);
 await app.listen({ port: PORT as number });
