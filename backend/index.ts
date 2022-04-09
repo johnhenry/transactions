@@ -3,7 +3,7 @@ import { Application } from "https://deno.land/x/oak/mod.ts";
 //@ts-ignore
 import log from "https://johnhenry.github.io/lib/js/log-dictionary/0.0.0/index.mjs";
 //@ts-ignore
-import CreateCORSMiddleware from "https://johnhenry.github.io/lib/js/cors-helper/0.0.0/oak-middleware.mjs";
+import CreateCORSMiddleware from "https://johnhenry.github.io/lib/js/cors-helper/0.0.0/middleware/oak.mjs";
 //@ts-ignore
 import { PORT } from "./settings.ts";
 //@ts-ignore
